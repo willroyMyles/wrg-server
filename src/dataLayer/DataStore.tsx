@@ -31,6 +31,7 @@ export interface RecordObject {
 	name: string
 	avatar: string
 	comments: number
+	status: number
 }
 
 export class RecordObject implements RecordObject {}
@@ -57,6 +58,7 @@ class DataStore {
 			obj.date = faker.date.between(2018, "2020").toString()
 			obj.name = faker.name.findName()
 			obj.avatar = faker.image.avatar()
+			obj.status = Math.floor(Math.random() * 3) + 1
 
 			obj.comments = faker.random.number({min: 0, max: 10, precision: 2})
 			arr.push(obj)
@@ -66,8 +68,6 @@ class DataStore {
 	}
 
 	test = autorun(() => {
-		console.log("headera")
-
 		this.data.map((array, index) => {
 			this.headers.push(array[0])
 			this.allParts.set(index, array)
