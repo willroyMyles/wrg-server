@@ -47,7 +47,7 @@ class DataStore {
 
 	@observable fakerData: Array<RecordObject> = []
 
-	@observable loggedIn = true
+	@observable loggedIn = false
 
 	getFakerData = () => {
 		return new Promise((resolve, reject) => {

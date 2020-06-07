@@ -4,7 +4,7 @@ import {observer} from "mobx-react"
 import dataProvider from "../../dataLayer/DataStore"
 import {BsPersonFill, BsGearFill} from "react-icons/bs"
 import Text from "antd/lib/typography/Text"
-import {fontColor} from "../../helpers"
+import {fontColor, eventEmitter} from "../../helpers"
 
 @observer
 export class SiderFooter extends PureComponent {
@@ -25,7 +25,9 @@ export class SiderFooter extends PureComponent {
 				</Row>
 
 				<Row justify="center" hidden={dataProvider.loggedIn}>
-					<Button style={{boxShadow: "0px 0px 10px rgba(200,200,250,.2)"}}>Login or Sign up</Button>
+					<Button onClick={() => eventEmitter.emit("open")} style={{boxShadow: "0px 0px 10px rgba(200,200,250,.2)"}}>
+						Login or Sign up
+					</Button>
 				</Row>
 				<div style={{height: "2vh"}}></div>
 			</div>

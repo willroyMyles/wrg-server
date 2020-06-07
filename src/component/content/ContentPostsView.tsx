@@ -9,6 +9,7 @@ import uiStore from "../../dataLayer/UIStore"
 import {BsPlusCircleFill} from "react-icons/bs"
 import Text from "antd/lib/typography/Text"
 import ContentPostListView from "./ContentPostListView"
+import ContentFooter from "./ContentFooter"
 
 interface IProps {
 	title: string
@@ -51,7 +52,14 @@ export class ContentPostsView extends PureComponent<IProps> {
 
 	render() {
 		return (
-			<div>
+			<div
+				style={{
+					flexDirection: "column",
+					border: "0px solid black",
+					minHeight: "100vh",
+					display: "flex",
+					justifyContent: "space-between",
+				}}>
 				<Layout style={tp}>
 					<Layout.Content
 						style={{
@@ -124,7 +132,9 @@ export class ContentPostsView extends PureComponent<IProps> {
 							<ContentPostListView />
 						</div>
 					</Layout.Content>
-					{/* <Layout.Sider></Layout.Sider> */}
+					<Layout.Footer style={tp}>
+						<ContentFooter />
+					</Layout.Footer>
 				</Layout>
 			</div>
 		)
