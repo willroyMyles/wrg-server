@@ -25,7 +25,9 @@ export class SiderFooter extends PureComponent {
 				</Row>
 
 				<Row justify="center" hidden={dataProvider.loggedIn}>
-					<Button onClick={() => eventEmitter.emit("open")} style={{boxShadow: "0px 0px 10px rgba(200,200,250,.2)"}}>
+					<Button
+						onClick={() => eventEmitter.emit("open")}
+						style={{boxShadow: "0px 0px 10px rgba(200,200,250,.2)", border: ".5px solid rgba(100,100,100,.2)"}}>
 						Login or Sign up
 					</Button>
 				</Row>
