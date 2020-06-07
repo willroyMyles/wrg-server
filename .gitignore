@@ -24,3 +24,4 @@ yarn-error.log*
 
 #yarn for heroku
 yarn.lock
+yarn*
