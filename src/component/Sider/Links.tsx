@@ -7,6 +7,7 @@ import dataProvider from "../../dataLayer/DataStore"
 import {ClickParam} from "antd/lib/menu"
 import {strToNum} from "../../helpers"
 import uiStore from "../../dataLayer/UIStore"
+import {Link} from "react-router-dom"
 
 const Links = memo(
 	observer(function Links() {
@@ -26,9 +27,11 @@ const Links = memo(
 					{dataProvider.headers.map((value, index) => {
 						return (
 							<Menu.Item key={index}>
-								<Text ellipsis={false} className="side-links">
-									{value}
-								</Text>
+								<Link to={`${index}`}>
+									<Text ellipsis={false} className="side-links">
+										{value}
+									</Text>
+								</Link>{" "}
 							</Menu.Item>
 						)
 					})}
