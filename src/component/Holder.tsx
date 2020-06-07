@@ -9,7 +9,7 @@ const Holder = memo(function Holder() {
 	const {Footer} = Layout
 	return (
 		<Layout style={tp}>
-			<Layout.Sider style={{backgroundColor: "white"}} collapsible>
+			<Layout.Sider style={{backgroundColor: "white"}} collapsible trigger={null}>
 				<SiderHolder />
 			</Layout.Sider>
 			<Layout.Content style={tp}>

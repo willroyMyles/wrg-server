@@ -47,24 +47,32 @@ class DataStore {
 
 	@observable fakerData: Array<RecordObject> = []
 
+	@observable loggedIn = true
+
 	getFakerData = () => {
-		var arr = []
-		for (let index = 0; index < 10; index++) {
-			// const obj = {title: "", desc: "", date: "", name: "", avatar: "", comments: 0}
-			const obj: RecordObject = new RecordObject()
+		return new Promise((resolve, reject) => {
+			var arr = []
+			for (let index = 0; index < 10; index++) {
+				// const obj = {title: "", desc: "", date: "", name: "", avatar: "", comments: 0}
+				const obj: RecordObject = new RecordObject()
 
-			obj.title = faker.commerce.productName()
-			obj.desc = faker.lorem.sentences(5)
-			obj.date = faker.date.between(2018, "2020").toString()
-			obj.name = faker.name.findName()
-			obj.avatar = faker.image.avatar()
-			obj.status = Math.floor(Math.random() * 3) + 1
+				obj.title = faker.commerce.productName()
+				obj.desc = faker.lorem.sentences(5)
+				obj.date = faker.date.between(2018, "2020").toString()
+				obj.name = faker.name.findName()
+				obj.avatar = faker.image.avatar()
+				obj.status = Math.floor(Math.random() * 3) + 1
 
-			obj.comments = faker.random.number({min: 0, max: 10, precision: 2})
-			arr.push(obj)
-		}
+				obj.comments = faker.random.number({min: 0, max: 10, precision: 2})
+				arr.push(obj)
+			}
 
-		this.fakerData = this.fakerData.concat(arr)
+			this.fakerData = this.fakerData.concat(arr)
+
+			setTimeout(() => {
+				resolve(true)
+			}, 1500)
+		})
 	}
 
 	test = autorun(() => {

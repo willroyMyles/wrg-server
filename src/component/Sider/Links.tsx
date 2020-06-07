@@ -20,13 +20,13 @@ const Links = memo(
 			<Row align="middle">
 				<Menu onClick={handleClick} mode="inline" defaultSelectedKeys={["-1"]}>
 					<Menu.Item key="-1" defaultChecked>
-						<Text>home</Text>
+						<Text className="side-links">home</Text>
 					</Menu.Item>
 
 					{dataProvider.headers.map((value, index) => {
 						return (
 							<Menu.Item key={index}>
-								<Text ellipsis={false} style={{fontSize: ".8rem", textShadow: "0px 0px 1px rgba(0,0,0,.2)"}}>
+								<Text ellipsis={false} className="side-links">
 									{value}
 								</Text>
 							</Menu.Item>
