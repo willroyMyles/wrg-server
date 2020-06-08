@@ -10,6 +10,7 @@ import {BsPlusCircleFill} from "react-icons/bs"
 import Text from "antd/lib/typography/Text"
 import ContentPostListView from "./ContentPostListView"
 import ContentFooter from "./ContentFooter"
+import {WRGTitle} from "../../helpers/StyledComps"
 
 interface IProps {
 	title: string
@@ -68,7 +69,7 @@ export class ContentPostsView extends PureComponent<IProps> {
 						}}>
 						<div style={{padding: 20, margin: 10}}>
 							<Row>
-								<Title style={{color: "rgba(121,132,141,1", fontWeight: "bold"}}>{this.props.title}</Title>
+								<WRGTitle style={{color: "rgba(121,132,141,1)", fontWeight: "bold"}}>{this.props.title}</WRGTitle>
 							</Row>
 							<Row gutter={[12, 12]}>
 								<Col>

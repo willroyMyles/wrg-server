@@ -7,6 +7,8 @@ import uiStore from "../../dataLayer/UIStore"
 import {tp, eventEmitter} from "../../helpers"
 import {Router, Switch, Route} from "react-router-dom"
 import {createBrowserHistory} from "history"
+import dataProvider from "../../dataLayer/DataStore"
+import RegisterAccount from "../account/RegisterAccount"
 
 const ContentHolder = memo(
 	observer(function ContentHolder() {
@@ -22,18 +24,19 @@ const ContentHolder = memo(
 				<Layout.Content style={tp}>
 					{/* <Router history={history}> */}
 					<Switch>
-						<Route path="/-1">
+						<Route path="/home">
 							<ContentPostsView title="home" />
 						</Route>
-						<Route path="/0">
-							<ContentPostsView title={uiStore.currentName} />
+						<Route path="/register">
+							<RegisterAccount />
 						</Route>
-						<Route path="/1">
-							<ContentPostsView title={uiStore.currentName} />
-						</Route>
-						<Route path="/2">
-							<ContentPostsView title={uiStore.currentName} />
-						</Route>
+						{dataProvider.headers.map((value, index) => {
+							return (
+								<Route path={`/${index}`}>
+									<ContentPostsView title={value} />
+								</Route>
+							)
+						})}
 					</Switch>
 					{/* </Router> */}
 					{/* {uiStore.indexes.get(0) != -1 && <ContentPostsView title={uiStore.currentName} />} */}

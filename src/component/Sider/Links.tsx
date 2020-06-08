@@ -20,8 +20,12 @@ const Links = memo(
 		return (
 			<Row align="middle">
 				<Menu onClick={handleClick} mode="inline" defaultSelectedKeys={["-1"]}>
-					<Menu.Item key="-1" defaultChecked>
-						<Text className="side-links">home</Text>
+					<Menu.Item key="" defaultChecked>
+						<Link to={`/home` || "/"}>
+							<Text ellipsis={false} className="side-links">
+								Home
+							</Text>
+						</Link>
 					</Menu.Item>
 
 					{dataProvider.headers.map((value, index) => {
@@ -31,7 +35,7 @@ const Links = memo(
 									<Text ellipsis={false} className="side-links">
 										{value}
 									</Text>
-								</Link>{" "}
+								</Link>
 							</Menu.Item>
 						)
 					})}

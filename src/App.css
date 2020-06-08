@@ -79,3 +79,11 @@
 
 	-webkit-transition: 0.3s;
 }
+
+.form-item {
+	padding: 0px;
+	margin: 0px;
+	color: red;
+	border: none;
+	background-color: transparent;
+}
