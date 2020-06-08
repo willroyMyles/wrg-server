@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "node index.js",
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"heroku-postbuild": "cd wrg && npm i && npm run build",
+		"heroku-postbuild": "cd wrg && npm i && npm i --only=dev && npm run build",
 		"logs": "heroku logs --tail -a wrg-server"
 	},
 	"author": "willroy myles",
