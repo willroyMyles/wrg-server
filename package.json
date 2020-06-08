@@ -1,0 +1,15 @@
+{
+	"name": "wrg-server-app",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"heroku-postbuild": "cd wrg-autoparts && npm i && npm run build"
+	},
+	"author": "willroy myles",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.17.1"
+	}
+}
