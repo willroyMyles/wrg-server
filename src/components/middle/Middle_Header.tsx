@@ -7,6 +7,7 @@ import eventEmitter, {eventStrings} from "../helpers/EventEmitters"
 
 const Middle_Header = () => {
 	const handleSelect = (name: string) => {
+		localStorage.setItem("name", "willroy")
 		sideHistory.push(`/${name}`)
 	}
 

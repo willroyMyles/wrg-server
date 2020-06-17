@@ -16,7 +16,7 @@ const LeftHolder = () => {
 				padding: 15,
 				backgroundColor: "white",
 				border: "0px solid black",
-				boxShadow: "4px 0px 10px rgba(100,100,100,.1)",
+				boxShadow: "7px 0px 10px rgba(100,100,100,.1)",
 			}}>
 			<Left_Top />
 			<Left_Middle />

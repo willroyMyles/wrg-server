@@ -23,3 +23,18 @@ export const sendCreatePost = (data: any) => {
 			})
 	})
 }
+
+export const register = (data: any) => {
+	console.log(data)
+	return new Promise((resolve, reject) => {
+		axios
+			.post(url + "signup", stringify(data))
+			.then((res) => {
+				console.log(res)
+				if (res) resolve(res)
+			})
+			.catch((err) => {
+				if (err) reject(err)
+			})
+	})
+}

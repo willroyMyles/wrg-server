@@ -6,6 +6,7 @@ import Content_Category from "./Content_Category"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
 import Content_Page from "./Content_Page"
 import Content_Create_Post from "./Content_Create_Post"
+import Content_Home from "./Content_Home"
 
 const Content_Holder = () => {
 	eventEmitter.on(eventStrings.categoriesSelected, () => {
@@ -23,13 +24,12 @@ const Content_Holder = () => {
 		sideHistory.push("/create-post")
 	})
 
-	console.log(sideHistory)
-
 	return (
 		<Layout>
 			<Layout.Content>
 				<Router history={sideHistory}>
 					<Switch>
+						<Route path="/home" component={Content_Home} />
 						<Route path="/category/:id/:sub" component={Content_Page} />
 						<Route path="/category/:id" component={Content_Page} />
 						<Route path="/category" component={Content_Category} />

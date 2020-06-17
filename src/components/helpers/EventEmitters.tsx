@@ -9,4 +9,8 @@ export const eventStrings = {
 	category: "category",
 	sub_category: "subCat",
 	createPost: "createPost",
+	login: "login",
+	register: "login",
+	shouldMinimize: "minimize",
+	shouldSetNode: "set some nodes",
 }
