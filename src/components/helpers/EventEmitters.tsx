@@ -13,4 +13,5 @@ export const eventStrings = {
 	register: "login",
 	shouldMinimize: "minimize",
 	shouldSetNode: "set some nodes",
+	logout: "log out",
 }

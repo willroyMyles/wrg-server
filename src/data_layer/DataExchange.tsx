@@ -1,9 +1,18 @@
 import {action, observable, autorun} from "mobx"
-import {sendCreatePost, register} from "../api_layer/Api_version_1"
+import {sendCreatePost, register, login} from "../api_layer/Api_version_1"
 import {localStorageStrings} from "../components/helpers/Helpers_Index"
+import eventEmitter, {eventStrings} from "../components/helpers/EventEmitters"
 
 class Store {
-	@observable loggedIn = false
+	constructor() {
+		eventEmitter.on(eventStrings.logout, () => {
+			// localStorage.removeItem(localStorageStrings.user_id)
+			// localStorage.removeItem(localStorageStrings.user_name)
+
+			this.userId = ""
+			this.username = ""
+		})
+	}
 	@observable loggedInString = ""
 	@observable userId = localStorage.getItem(localStorageStrings.user_id) || ""
 
@@ -28,10 +37,13 @@ class Store {
 		return new Promise((resolve) => {
 			register(data)
 				.then((res: any) => {
-					this.username = this.tempUsername
-					this.userId = res.data.insertedId
-					this.loggedInString = "yes"
-					if (res) resolve(true)
+					if (res.data) {
+						this.username = this.tempUsername
+						this.userId = res.data.insertedId
+						this.loggedInString = "yes"
+
+						if (res) resolve(true)
+					} else resolve(false)
 				})
 				.catch((err) => {
 					if (err) resolve(false)
@@ -39,12 +51,28 @@ class Store {
 		})
 	}
 
+	@action login = (data: any) => {
+		return new Promise((resolve, reject) => {
+			login(data)
+				.then((res: any) => {
+					if (res.data) {
+						this.username = res.data.username
+						this.userId = res.data.id
+						resolve(true)
+					} else resolve(false)
+				})
+				.catch((err) => {
+					resolve(false)
+				})
+		})
+	}
+
 	@action isLoggedIn = () => this.userId != ""
 
 	a = autorun((escape: any) => {
-		if (this.username != "" && this.username != localStorage.getItem(localStorageStrings.user_name))
+		if (this.username != localStorage.getItem(localStorageStrings.user_name))
 			localStorage.setItem(localStorageStrings.user_name, this.username)
-		if (this.userId != "" && this.userId != localStorage.getItem(localStorageStrings.user_id))
+		if (this.userId != localStorage.getItem(localStorageStrings.user_id))
 			localStorage.setItem(localStorageStrings.user_id, this.userId)
 
 		console.log(this.username, localStorage.getItem(localStorageStrings.user_name))

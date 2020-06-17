@@ -38,3 +38,16 @@ export const register = (data: any) => {
 			})
 	})
 }
+
+export const login = (data: any) => {
+	return new Promise((resolve, reject) => {
+		axios
+			.post(url + "login", stringify(data))
+			.then((res) => {
+				if (res) resolve(res)
+			})
+			.catch((err) => {
+				reject(err)
+			})
+	})
+}
