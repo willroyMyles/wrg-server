@@ -6,6 +6,7 @@ import {BsPlus, BsPlusCircleFill} from "react-icons/bs"
 import dataProvider from "../../data_layer/DataProvider"
 import {motion} from "framer-motion"
 import Motioner from "../helpers/Motioner"
+import eventEmitter, {eventStrings} from "../helpers/EventEmitters"
 
 const Left_Top = observer(() => {
 	const [name, setname] = useState("")
@@ -36,7 +37,12 @@ const Left_Top = observer(() => {
 			)}
 			<Row style={{marginTop: 19}} align="middle" justify="center">
 				<Tooltip placement="right" title="Create Post">
-					<BsPlusCircleFill size={40} fill="rgba(100,100,200)" style={{cursor: "pointer"}} />
+					<BsPlusCircleFill
+						onClick={() => eventEmitter.emit(eventStrings.createPost)}
+						size={40}
+						fill="rgba(100,100,200)"
+						style={{cursor: "pointer"}}
+					/>
 				</Tooltip>
 			</Row>
 		</div>

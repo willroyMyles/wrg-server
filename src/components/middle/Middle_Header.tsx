@@ -4,17 +4,18 @@ import RadioGroups from "../helpers/RadioGroups"
 import Title from "antd/lib/typography/Title"
 import {sideHistory} from "../helpers/Helpers_Index"
 import eventEmitter, {eventStrings} from "../helpers/EventEmitters"
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 
 const Middle_Header = () => {
 	const handleSelect = (name: string) => {
-		localStorage.setItem("name", "willroy")
 		sideHistory.push(`/${name}`)
 	}
+	const bp = useBreakpoint()
 
 	return (
 		<div>
 			<Row align="middle" justify="space-between">
-				<Col>
+				<Col xs={0} md={8}>
 					<span style={{color: "rgba(0,0,0,.6)", fontWeight: "bold", marginLeft: 15}}>WRG-Autoparts</span>
 				</Col>
 				<Col>
@@ -23,14 +24,6 @@ const Middle_Header = () => {
 					</Row>
 				</Col>
 				<div />
-				<Col>
-					<Button
-						onClick={() => {
-							eventEmitter.emit(eventStrings.createPost)
-						}}>
-						new post
-					</Button>
-				</Col>
 			</Row>
 		</div>
 	)

@@ -21,6 +21,7 @@ class Store {
 	@observable username = localStorage.getItem(localStorageStrings.user_name) || ""
 
 	@action sendCreatePostData = (data: any) => {
+		data.userId = this.userId
 		return new Promise((resolve) => {
 			sendCreatePost(data)
 				.then((res) => {

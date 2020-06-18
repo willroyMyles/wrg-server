@@ -8,7 +8,7 @@ import {motion, AnimatePresence} from "framer-motion"
 import Signup from "./components/middle/account/Signup"
 
 const Holder = () => {
-	const [minimized, setMinimized] = useState(false)
+	const [minimized, setMinimized] = useState(true)
 	const [node, setNode] = useState<ReactNode>(<Signup />)
 	const breakPoint = useBreakpoint()
 

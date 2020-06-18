@@ -1,14 +1,16 @@
 import axios from "axios"
 import {stringify} from "querystring"
 import {message, Row} from "antd"
+import moment from "moment"
 
 const url = "http://localhost:8000/api/"
 axios.defaults.headers = {
 	"Content-Type": "application/x-www-form-urlencoded",
 }
 export const sendCreatePost = (data: any) => {
+	data.year = moment(data.year._d).format("YYYY")
 	return new Promise((resolve, reject) => {
-		console.log("posting", data)
+		console.log("posting", stringify(data))
 		axios
 			.post(url + "post/create", stringify(data))
 			.then((res) => {
