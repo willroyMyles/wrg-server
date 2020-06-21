@@ -1,27 +1,15 @@
-import React, {useState, useEffect} from "react"
+import React, {useState} from "react"
 import {useParams} from "react-router-dom"
-import {Row, Col, Button, Select, Cascader} from "antd"
-import BackButton from "../../helpers/BackButton"
+import {Row, Cascader} from "antd"
 import dataProvider from "../../../data_layer/DataProvider"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
-import Bread from "../../helpers/Bread"
-import Text from "antd/lib/typography/Text"
-import logger from "../../helpers/Logger"
 import {CascaderValueType} from "antd/lib/cascader"
-
-interface Option {
-	value: string | number
-	label?: React.ReactNode
-	disabled?: boolean
-	index?: number
-	children?: Option[]
-}
 
 const Content_Page = () => {
 	const {id, sub} = useParams()
-	const [cat, setcat] = useState<string>(dataProvider.headers[Number.parseInt(id)])
+	const [cat] = useState<string>(dataProvider.headers[Number.parseInt(id)])
 	const subCat: string | undefined = dataProvider.data[Number.parseInt(id)][sub]
-	const [showing, setShowing] = useState(true)
+	const [] = useState(true)
 
 	const options = [
 		dataProvider.data.map((array, index) => {

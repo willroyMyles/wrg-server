@@ -6,6 +6,7 @@ export default eventEmitter
 export const eventStrings = {
 	homeSelected: "home selected",
 	categoriesSelected: "categoriesSelected",
+	settingsSelected: "settings selected",
 	category: "category",
 	sub_category: "subCat",
 	createPost: "createPost",
@@ -14,4 +15,5 @@ export const eventStrings = {
 	shouldMinimize: "minimize",
 	shouldSetNode: "set some nodes",
 	logout: "log out",
+	showDrawer: "showDrawer",
 }

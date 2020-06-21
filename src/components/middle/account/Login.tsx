@@ -4,6 +4,7 @@ import {Row, Input, Col, Button, message} from "antd"
 import {ErrorLabel, motionValues} from "../../helpers/Helpers_Index"
 import {motion} from "framer-motion"
 import dataExchanger from "../../../data_layer/DataExchange"
+import Motioner from "../../helpers/Motioner"
 interface FormPropsL {
 	email: string
 	password: string
@@ -26,11 +27,7 @@ const Login = () => {
 	}
 
 	return (
-		<motion.div
-			style={{width: "100%", border: "0px solid black"}}
-			initial={motionValues.initial_Scale_Big}
-			animate={motionValues.in}
-			exit={motionValues.initial_Scale_Big}>
+		<Motioner style={{width: "100%", border: "0px solid black"}}>
 			<Row justify="center">
 				<form onSubmit={handleSubmit(submit)}>
 					<Row style={{marginTop: 35}}>
@@ -62,7 +59,7 @@ const Login = () => {
 					</Row>
 				</form>
 			</Row>
-		</motion.div>
+		</Motioner>
 	)
 }
 

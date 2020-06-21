@@ -8,10 +8,7 @@ import Content_Holder from "./content/Content_Holder"
 const Middle_Holder = () => {
 	return (
 		<Layout>
-			<Layout.Header style={{backgroundColor: "transparent", padding: 0}}>
-				<Middle_Header />
-			</Layout.Header>
-			<Layout.Content style={{marginLeft: 20, marginTop: 30}}>
+			<Layout.Content>
 				<Content_Holder />
 			</Layout.Content>
 		</Layout>

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {Avatar, Row, Button, Tooltip} from "antd"
+import {Avatar, Row, Button, Tooltip, Col} from "antd"
 import {observer} from "mobx-react"
 import dataExchanger from "../../data_layer/DataExchange"
 import {BsPlus, BsPlusCircleFill} from "react-icons/bs"
@@ -7,45 +7,49 @@ import dataProvider from "../../data_layer/DataProvider"
 import {motion} from "framer-motion"
 import Motioner from "../helpers/Motioner"
 import eventEmitter, {eventStrings} from "../helpers/EventEmitters"
+import {theme} from "../../Theme"
+import Text from "antd/lib/typography/Text"
+import Content_Create_Post from "../middle/content/Content_Create_Post"
 
 const Left_Top = observer(() => {
-	const [name, setname] = useState("")
-
-	useEffect(() => {
-		setname(dataExchanger.username)
-		const arr = dataExchanger.username.split(" ")
-
-		arr.forEach((value, index) => {
-			setname((previous) => previous + value.slice(0, 1))
-		})
-	}, [dataExchanger.username])
-
 	return (
-		<div>
-			{dataExchanger.isLoggedIn() && (
-				<Motioner>
-					<Row style={{marginTop: 15}} align="middle" justify="center">
-						<Tooltip placement="right" title="Profile">
-							<Avatar
-								style={{color: "white", cursor: "pointer", backgroundColor: "rgba(100,100,190)", fontSize: ".9rem"}}
-								size={42}>
-								{name.toUpperCase()}
-							</Avatar>
-						</Tooltip>
-					</Row>
-				</Motioner>
-			)}
-			<Row style={{marginTop: 19}} align="middle" justify="center">
-				<Tooltip placement="right" title="Create Post">
-					<BsPlusCircleFill
-						onClick={() => eventEmitter.emit(eventStrings.createPost)}
-						size={40}
-						fill="rgba(100,100,200)"
-						style={{cursor: "pointer"}}
-					/>
-				</Tooltip>
+		<Motioner>
+			<Row
+				onClick={() => eventEmitter.emit(eventStrings.homeSelected)}
+				style={{marginTop: 5, cursor: "pointer", marginBottom: 10}}
+				align="middle"
+				justify="center">
+				<div style={{borderRadius: 100}}>
+					<Text>WRG-Autoparts</Text>
+				</div>
 			</Row>
-		</div>
+			<Row>
+				<Col>
+					<Motioner>
+						<Button
+							onClick={() => {
+								eventEmitter.emit(eventStrings.showDrawer)
+								eventEmitter.emit(eventStrings.shouldSetNode, <Content_Create_Post />)
+							}}
+							style={{
+								backgroundColor: theme.primary_color,
+								boxShadow: theme.boxShadow,
+								padding: 0,
+								paddingLeft: 20,
+								paddingRight: 20,
+								color: theme.text_white,
+								borderRadius: 4,
+								border: "none",
+							}}>
+							<Row align="middle">
+								<BsPlus />
+								<div>Create new Post</div>
+							</Row>
+						</Button>
+					</Motioner>
+				</Col>
+			</Row>
+		</Motioner>
 	)
 })
 

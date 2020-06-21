@@ -1,4 +1,4 @@
-import {action, observable, autorun} from "mobx"
+import {action, observable, autorun, computed} from "mobx"
 import {sendCreatePost, register, login} from "../api_layer/Api_version_1"
 import {localStorageStrings} from "../components/helpers/Helpers_Index"
 import eventEmitter, {eventStrings} from "../components/helpers/EventEmitters"
@@ -21,6 +21,11 @@ class Store {
 	@observable username = localStorage.getItem(localStorageStrings.user_name) || ""
 
 	@action sendCreatePostData = (data: any) => {
+		data.make = data.make_model[0]
+		data.model = data.make_model[1]
+		data.category = data.cat_sub[0]
+		data.sub_category = data.cat_sub[1]
+		console.log(data)
 		data.userId = this.userId
 		return new Promise((resolve) => {
 			sendCreatePost(data)
@@ -68,7 +73,7 @@ class Store {
 		})
 	}
 
-	@action isLoggedIn = () => this.userId != ""
+	@observable isLoggedIn = () => this.userId != ""
 
 	a = autorun((escape: any) => {
 		if (this.username != localStorage.getItem(localStorageStrings.user_name))

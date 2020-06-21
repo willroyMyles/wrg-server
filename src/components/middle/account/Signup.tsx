@@ -6,16 +6,13 @@ import Login from "./Login"
 import Register from "./Register"
 import {motion, AnimatePresence} from "framer-motion"
 import {motionValues} from "../../helpers/Helpers_Index"
+import Motioner from "../../helpers/Motioner"
 
 const Signup = () => {
 	const [login, setLogin] = useState(true)
 
 	return (
-		<motion.div
-			style={{width: "100%", border: "0px solid black"}}
-			initial={motionValues.initial_Scale_Big}
-			animate={motionValues.in}
-			exit={motionValues.initial_Scale_Big}>
+		<Motioner style={{width: "100%", border: "0px solid black"}}>
 			<Row justify="center" style={{margin: 25, marginBottom: 140}}>
 				<Radio.Group defaultValue={true} onChange={(c) => setLogin(c.target.value)}>
 					<Radio.Button value={true}>Login</Radio.Button>
@@ -26,7 +23,7 @@ const Signup = () => {
 				{login && <Login />}
 				{!login && <Register />}
 			</AnimatePresence>
-		</motion.div>
+		</Motioner>
 	)
 }
 

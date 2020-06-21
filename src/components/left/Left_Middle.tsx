@@ -7,7 +7,11 @@ import LeftMiddle_Default from "./view/LeftMiddle_Default"
 const Left_Middle = () => {
 	const [defaultVisible, setDefaultVisible] = useState(true)
 
-	return <Row justify="center">{defaultVisible && <LeftMiddle_Default />}</Row>
+	return (
+		<Row align="top" justify="start" style={{width: "100%"}}>
+			{defaultVisible && <LeftMiddle_Default />}
+		</Row>
+	)
 }
 
 export default Left_Middle

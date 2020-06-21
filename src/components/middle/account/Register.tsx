@@ -5,6 +5,7 @@ import {Row, Input, Col, Button} from "antd"
 import {Controller, useForm} from "react-hook-form"
 import dataExchanger from "../../../data_layer/DataExchange"
 import {observer} from "mobx-react"
+import Motioner from "../../helpers/Motioner"
 
 interface FormPropsL {
 	email: string
@@ -22,11 +23,7 @@ const Register = observer(() => {
 	}
 
 	return (
-		<motion.div
-			style={{width: "100%", border: "0px solid black"}}
-			initial={motionValues.initial_Scale_Big}
-			animate={motionValues.in}
-			exit={motionValues.initial_Scale_Big}>
+		<Motioner style={{width: "100%", border: "0px solid black"}}>
 			<Row justify="center">
 				<form onSubmit={handleSubmit(submit)}>
 					<Row style={{margin: 20}}>
@@ -82,7 +79,7 @@ const Register = observer(() => {
 					</Row>
 				</form>
 			</Row>
-		</motion.div>
+		</Motioner>
 	)
 })
 
