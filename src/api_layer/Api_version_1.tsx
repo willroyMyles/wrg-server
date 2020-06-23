@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, {AxiosRequestConfig} from "axios"
 import {stringify} from "querystring"
 import {message, Row} from "antd"
 import moment from "moment"
@@ -7,6 +7,7 @@ const url = "http://localhost:8000/api/"
 axios.defaults.headers = {
 	"Content-Type": "application/x-www-form-urlencoded",
 }
+
 export const sendCreatePost = (data: any) => {
 	data.year = moment(data.year._d).format("YYYY")
 	return new Promise((resolve, reject) => {
@@ -22,6 +23,25 @@ export const sendCreatePost = (data: any) => {
 			.catch((err) => {
 				console.log(err)
 				reject(false)
+			})
+	})
+}
+
+export const getPosts = (offset: number, limit: number) => {
+	const headers: AxiosRequestConfig = {
+		headers: {
+			offset: offset,
+			limit: limit,
+		},
+	}
+	return new Promise((resolve, reject) => {
+		axios
+			.get(url + "post", headers)
+			.then((res) => {
+				resolve(res.data)
+			})
+			.catch((err) => {
+				reject(err)
 			})
 	})
 }

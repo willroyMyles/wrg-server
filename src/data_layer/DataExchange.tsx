@@ -1,7 +1,8 @@
 import {action, observable, autorun, computed} from "mobx"
-import {sendCreatePost, register, login} from "../api_layer/Api_version_1"
+import {sendCreatePost, register, login, getPosts} from "../api_layer/Api_version_1"
 import {localStorageStrings} from "../components/helpers/Helpers_Index"
 import eventEmitter, {eventStrings} from "../components/helpers/EventEmitters"
+import dataProvider from "./DataProvider"
 
 class Store {
 	constructor() {
@@ -20,6 +21,11 @@ class Store {
 
 	@observable username = localStorage.getItem(localStorageStrings.user_name) || ""
 
+	@observable postData: Array<any> = []
+	@observable postOffset = 0
+
+	@observable postLimit = 5
+
 	@action sendCreatePostData = (data: any) => {
 		data.make = data.make_model[0]
 		data.model = data.make_model[1]
@@ -30,9 +36,42 @@ class Store {
 		return new Promise((resolve) => {
 			sendCreatePost(data)
 				.then((res) => {
+					this.postData.push(this.format(data))
 					if (res) resolve(true)
 				})
 				.catch((err) => {
+					resolve(false)
+				})
+		})
+	}
+
+	format = (element: any) => {
+		if (typeof element.make != typeof "") return
+		if (typeof element.model != typeof "") return
+		if (typeof element.category != typeof "") return
+		if (typeof element.sub_category != typeof "") return
+		element.model = dataProvider.carData[Number.parseInt(element.make)][Number.parseInt(element.model)]
+		element.make = dataProvider.car_make[Number.parseInt(element.make)]
+		element.sub_category = dataProvider.parts[Number.parseInt(element.category)][Number.parseInt(element.sub_category)]
+		element.category = dataProvider.headers[Number.parseInt(element.category)]
+		return element
+	}
+
+	@action getPosts = () => {
+		return new Promise((resolve) => {
+			getPosts(this.postOffset, this.postLimit)
+				.then((res: any) => {
+					console.log(res)
+					if (res.length != 0) this.postOffset += this.postLimit
+					res.forEach((element: any) => {
+						element = this.format(element)
+					})
+					this.postData = this.postData.concat(res)
+					if (res.length == 0) resolve(100)
+					resolve(true)
+				})
+				.catch((err) => {
+					console.log(err)
 					resolve(false)
 				})
 		})

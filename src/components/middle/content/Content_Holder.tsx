@@ -12,16 +12,20 @@ import Signup from "../account/Signup"
 import Motioner from "../../helpers/Motioner"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import Settings from "../account/Settings"
+import {theme} from "../../../Theme"
+import Content_View_Post from "./Content_View_Post"
+import Profile_View_Other from "../account/Profile_View_Other"
 
 const Content_Holder = () => {
 	const bp = useBreakpoint()
 
 	const [visible, setVisible] = useState(false)
-	const [node, setNode] = useState<ReactNode>(<Signup />)
+	const [node, setNode] = useState<ReactNode>(<Content_Create_Post />)
 
 	useEffect(() => {
-		eventEmitter.on(eventStrings.showDrawer, () => {
-			setVisible(true)
+		eventEmitter.on(eventStrings.showDrawer, (val) => {
+			if (val != undefined) setVisible(val)
+			else setVisible(true)
 		})
 
 		eventEmitter.on(eventStrings.shouldSetNode, (node) => {
@@ -40,7 +44,8 @@ const Content_Holder = () => {
 		})
 
 		eventEmitter.on(eventStrings.createPost, () => {
-			sideHistory.push("/create-post")
+			setNode(<Content_Create_Post />)
+			setVisible(true)
 		})
 
 		eventEmitter.on(eventStrings.homeSelected, () => {
@@ -50,12 +55,26 @@ const Content_Holder = () => {
 		eventEmitter.on(eventStrings.settingsSelected, () => {
 			sideHistory.push("/settings")
 		})
+
+		eventEmitter.on(eventStrings.PostSelected, (post) => {
+			setVisible(true)
+			// setNode(<Content_View_Post item={post} />)
+		})
+
+		eventEmitter.on(eventStrings.showOtherProfile, (profile) => {
+			setVisible(true)
+			setNode(<Profile_View_Other item={profile} />)
+		})
 	}, [])
 
 	return (
-		<Layout id="holder" style={{backgroundColor: "transparent"}}>
+		<Layout id="holder" style={{backgroundColor: theme.faint, padding: 10}}>
 			<Layout.Content>
-				<Drawer width={bp.xs ? "100%" : "78%"} visible={visible} onClose={() => setVisible(false)}>
+				<Drawer
+					width={bp.xs ? "100%" : "78%"}
+					drawerStyle={{backgroundColor: theme.faint}}
+					visible={visible}
+					onClose={() => setVisible(false)}>
 					<div>{node}</div>
 				</Drawer>
 				<Router history={sideHistory}>

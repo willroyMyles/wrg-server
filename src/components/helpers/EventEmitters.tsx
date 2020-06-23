@@ -16,4 +16,7 @@ export const eventStrings = {
 	shouldSetNode: "set some nodes",
 	logout: "log out",
 	showDrawer: "showDrawer",
+	list_mounted: "list mounted",
+	PostSelected: "post slected ",
+	showOtherProfile: " other profile",
 }

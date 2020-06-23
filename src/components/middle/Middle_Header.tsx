@@ -17,6 +17,7 @@ import {observer} from "mobx-react"
 import {Avatar} from "evergreen-ui"
 import randomColor from "randomcolor"
 import {ConfirmButton} from "../left/Left_Bottom"
+import {Winput} from "../helpers/Styled"
 
 const Middle_Header = observer(() => {
 	const bp = useBreakpoint()
@@ -25,19 +26,24 @@ const Middle_Header = observer(() => {
 		<Motioner
 			style={{
 				marginBottom: 35,
-				backgroundColor: "white",
+				backgroundColor: "transparent",
 				padding: 10,
 				paddingLeft: pad,
 				paddingRight: pad,
-				boxShadow: "0px 2px 5px rgba(200,200,200, .3)",
+				// boxShadow: "0px 2px 5px rgba(200,200,200, .3)",
 			}}>
 			<Row style={{}} align="middle" justify="space-around">
 				<Col flex="auto">
-					<Input
-						style={{marginRight: 10, border: "none"}}
+					<Winput
+						style={{marginRight: 10, border: "none", backgroundColor: "white"}}
 						prefix={
 							<BsSearch
-								style={{marginRight: 10, border: "none", borderBottom: "1px solid lightGrey"}}
+								style={{
+									marginRight: 10,
+									border: "none",
+									borderBottom: "1px solid lightGrey",
+									backgroundColor: "transparent",
+								}}
 								size={12}
 								opacity={0.6}
 							/>
@@ -48,9 +54,10 @@ const Middle_Header = observer(() => {
 				<Col span={2} />
 
 				<Col>
-					{!dataExchanger.isLoggedIn() && (
+					{/* {!dataExchanger.isLoggedIn() && (
 						<Tooltip title="Login / Register">
 							<Button
+								style={{border: "none", marginBottom: 20}}
 								onClick={() => {
 									eventEmitter.emit(eventStrings.showDrawer)
 									eventEmitter.emit(eventStrings.shouldSetNode, <Signup />)
@@ -60,7 +67,7 @@ const Middle_Header = observer(() => {
 								shape="round"
 							/>
 						</Tooltip>
-					)}
+					)} */}
 					{dataExchanger.isLoggedIn() && (
 						<Tooltip title="Profile" placement="bottomLeft">
 							<Button
@@ -69,24 +76,10 @@ const Middle_Header = observer(() => {
 									backgroundColor: "rgba(200,200,200,.00)",
 									boxShadow: "0px 0px 5px rgba(0,0,0,.0)",
 								}}
-								onClick={() => eventEmitter.emit(eventStrings.settingsSelected)}
-								type="default"
-								shape="round">
+								onClick={() => eventEmitter.emit(eventStrings.settingsSelected)}>
 								<Row align="middle" justify="space-between">
-									<Col>
-										<Row align="middle">
-											<Col>
-												<Avatar
-													style={{boxShadow: "0px 0px 15px rgba(0,0,0,.04)"}}
-													size={32}
-													name={dataExchanger.username}
-													color="automatic"
-												/>
-											</Col>
-											<Col style={{marginLeft: 7}}>
-												<SubHeading>Good Morning ,{dataExchanger.username}</SubHeading>
-											</Col>
-										</Row>
+									<Col style={{marginLeft: 7}}>
+										<SubHeading>Good Morning ,{dataExchanger.username}</SubHeading>
 									</Col>
 								</Row>
 							</Button>

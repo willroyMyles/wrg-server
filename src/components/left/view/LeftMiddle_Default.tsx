@@ -10,6 +10,7 @@ import {Menu} from "evergreen-ui"
 
 const LeftMiddle_Default = () => {
 	const iconSize = 18
+	const iconSizeAlt = 18
 	const mar = 5
 	const bp = useBreakpoint()
 
@@ -18,12 +19,20 @@ const LeftMiddle_Default = () => {
 	const links = [
 		[
 			"home",
-			<BsHouseDoor color={selected == 0 ? theme.primary_color : theme.text_light} size={iconSize} />,
+			<BsHouseDoor
+				strokeWidth={selected == 0 ? 0.5 : 0.1}
+				color={selected == 0 ? theme.primary_color : theme.text_extra_light}
+				size={iconSize}
+			/>,
 			eventStrings.homeSelected,
 		],
 		[
 			"categories",
-			<BsList color={selected == 1 ? theme.primary_color : theme.text_light} size={iconSize} />,
+			<BsList
+				strokeWidth={selected == 1 ? 0.5 : 0.1}
+				color={selected == 1 ? theme.primary_color : theme.text_extra_light}
+				size={iconSize}
+			/>,
 			eventStrings.categoriesSelected,
 		],
 	]
@@ -36,18 +45,20 @@ const LeftMiddle_Default = () => {
 				const isSauce = selected == index
 				return (
 					<Motioner style={{marginTop: mar, width: "100%"}} key="index">
-						<Tooltip placement="right" title={arr[0]}>
+						<Tooltip placement="right" mouseEnterDelay={1} title={arr[0]}>
 							<Row
 								align="middle"
 								style={{
 									width: "100%",
-									borderRadius: 4,
-									border: isSauce ? ".1px solid rgba(100,100,100,.1)" : "none",
-									backgroundColor: isSauce ? theme.text_white : "transparent",
+									borderRadius: 0,
+									// border: isSauce ? ".1px solid rgba(100,100,100,.1)" : "none",
+									// backgroundColor: isSauce ? theme.text_white : "transparent",
 									// boxShadow: isSauce ? "0px 0px 25px rgba(150,150,150,.1)" : "none",
 									padding: 7,
 									paddingLeft: 10,
 									paddingRight: 10,
+									cursor: "pointer",
+									// borderRight: isSauce ? `1px solid ${theme.primary_color}` : "none",
 								}}
 								onClick={() => {
 									eventEmitter.emit(arr[2])
@@ -58,7 +69,8 @@ const LeftMiddle_Default = () => {
 									<Text
 										style={{
 											marginLeft: 10,
-											color: isSauce ? theme.primary_color : theme.text_light,
+											color: isSauce ? theme.primary_color : theme.text_extra_light,
+											fontWeight: isSauce ? "bold" : "normal",
 											fontSize: ".85rem",
 											textTransform: "uppercase",
 										}}>

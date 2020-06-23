@@ -19,7 +19,7 @@ const LeftHolder = () => {
 				flexDirection: "column",
 				// justifyContent: "space-between",
 				alignItems: "middle",
-				padding: bp.xs ? 15 : 20,
+				// padding: bp.xs ? 15 : 20,
 				// paddingRight: 25,
 				backgroundColor: theme.faint,
 				border: "0px solid black",

@@ -7,6 +7,7 @@ import eventEmitter, {eventStrings} from "./components/helpers/EventEmitters"
 import {motion, AnimatePresence} from "framer-motion"
 import Signup from "./components/middle/account/Signup"
 import Middle_Header from "./components/middle/Middle_Header"
+import {theme} from "./Theme"
 
 const Holder = () => {
 	const [minimized, setMinimized] = useState(false)
@@ -20,7 +21,14 @@ const Holder = () => {
 				collapsed={breakPoint.xs}>
 				<LeftHolder />
 			</Layout.Sider>
-			<Layout.Content style={{height: "100vh", overflow: "scroll", paddingLeft: breakPoint.xs ? 3 : 35, zIndex: 2}}>
+			<Layout.Content
+				style={{
+					height: "100vh",
+					overflow: "scroll",
+					paddingLeft: breakPoint.xs ? 3 : 35,
+					zIndex: 2,
+					backgroundColor: theme.faint,
+				}}>
 				<Middle_Header />
 				<Middle_Holder />
 			</Layout.Content>

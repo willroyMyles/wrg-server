@@ -4,6 +4,7 @@ import Title from "antd/lib/typography/Title"
 import RadioGroups from "../helpers/RadioGroups"
 import Middle_Header from "./Middle_Header"
 import Content_Holder from "./content/Content_Holder"
+import {theme} from "../../Theme"
 
 const Middle_Holder = () => {
 	return (

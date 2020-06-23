@@ -1,6 +1,15 @@
 import React, {useState, useEffect} from "react"
-import {Row, Tooltip, notification, Button, Avatar} from "antd"
-import {BsHouse, BsBoxArrowInRight, BsBoxArrowInLeft, BsBoxArrowRight, BsBoxArrowLeft} from "react-icons/bs"
+import {Row, Tooltip, notification, Button, Col} from "antd"
+import {
+	BsHouse,
+	BsBoxArrowInRight,
+	BsBoxArrowInLeft,
+	BsBoxArrowRight,
+	BsBoxArrowLeft,
+	BsSearch,
+	BsPerson,
+	BsGear,
+} from "react-icons/bs"
 import eventEmitter, {eventStrings} from "../helpers/EventEmitters"
 import Signup from "../middle/account/Signup"
 import {observer} from "mobx-react"
@@ -10,6 +19,9 @@ import Text from "antd/lib/typography/Text"
 import {theme} from "../../Theme"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import Motioner from "../helpers/Motioner"
+import {Winput} from "../helpers/Styled"
+import {SubHeading} from "../helpers/Helpers_Index"
+import {Avatar} from "evergreen-ui"
 
 const Left_Bottom = observer(() => {
 	const [trigger, setTrigger] = useState(false)
@@ -30,37 +42,71 @@ const Left_Bottom = observer(() => {
 		setTrigger(!trigger)
 	}, [dataExchanger.userId])
 
-	if (!dataExchanger.isLoggedIn())
-		return (
-			<Row justify="start">
-				<Tooltip placement="right" title="log in">
-					<Row
-						align="bottom"
-						justify="space-between"
-						onClick={() => {
-							eventEmitter.emit(eventStrings.showDrawer)
-							// eventEmitter.emit(eventStrings.shouldSetNode, <Signup />)
-						}}>
-						<BsBoxArrowInRight color={theme.text_light} size={22} />
-						{!bp.xs && <Text style={{marginLeft: 10, color: theme.text_light}}>Log in</Text>}
-					</Row>
-				</Tooltip>
-			</Row>
-		)
-	else
-		return (
-			<Motioner>
-				<Row style={{marginTop: 15}} align="middle" justify="center">
-					<Tooltip placement="right" title="Profile">
-						<Avatar
-							style={{color: "white", cursor: "pointer", backgroundColor: theme.primary_color, fontSize: ".9rem"}}
-							size={42}>
-							{name.toUpperCase()}
-						</Avatar>
+	return (
+		<Row align="middle" justify="center" style={{padding: 10}}>
+			<Col>
+				{!dataExchanger.isLoggedIn() && (
+					<Tooltip placement="right" title="Login / Register">
+						<Button
+							style={{border: "none", marginBottom: 20}}
+							onClick={() => {
+								eventEmitter.emit(eventStrings.showDrawer)
+								eventEmitter.emit(eventStrings.shouldSetNode, <Signup />)
+							}}
+							type="text"
+							icon={<BsPerson size={30} />}
+							shape="round"
+						/>
 					</Tooltip>
-				</Row>
-			</Motioner>
-		)
+				)}
+				{dataExchanger.isLoggedIn() && (
+					<Tooltip title="Profile" placement="right">
+						<Motioner
+							style={{
+								border: "none",
+								backgroundColor: "rgba(255,255,255,.95)",
+								boxShadow: "0px 0px 5px rgba(0,0,0,.05)",
+								padding: 15,
+								borderRadius: 7,
+								marginBottom: 10,
+								width: "100%",
+							}}>
+							<Row
+								align="middle"
+								justify="space-between"
+								onClick={() => eventEmitter.emit(eventStrings.settingsSelected)}>
+								<Col>
+									<Row align="middle">
+										<Col>
+											<Avatar
+												style={{boxShadow: "0px 0px 15px rgba(0,0,0,.04)"}}
+												size={35}
+												name={dataExchanger.username}
+												hashValue={theme.secondary_Color}
+											/>
+										</Col>
+										{bp.sm && (
+											<Col style={{marginLeft: 7}}>
+												<SubHeading>Good Morning, {dataExchanger.username}</SubHeading>
+											</Col>
+										)}
+									</Row>
+									<Row align="middle" justify="space-between" style={{marginTop: 7, margin: 5}}>
+										<Col style={{cursor: "pointer", marginTop: 5}}>
+											<BsGear size={20} />
+										</Col>
+										<Col>
+											<BsBoxArrowLeft size={20} />
+										</Col>
+									</Row>
+								</Col>
+							</Row>
+						</Motioner>
+					</Tooltip>
+				)}
+			</Col>
+		</Row>
+	)
 })
 
 export const ConfirmButton = () => {

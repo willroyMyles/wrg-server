@@ -8,7 +8,7 @@ const Left_Middle = () => {
 	const [defaultVisible, setDefaultVisible] = useState(true)
 
 	return (
-		<Row align="top" justify="start" style={{width: "100%"}}>
+		<Row align="top" justify="start" style={{width: "100%", padding: 20}}>
 			{defaultVisible && <LeftMiddle_Default />}
 		</Row>
 	)

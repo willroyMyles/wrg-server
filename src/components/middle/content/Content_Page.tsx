@@ -4,6 +4,8 @@ import {Row, Cascader} from "antd"
 import dataProvider from "../../../data_layer/DataProvider"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
 import {CascaderValueType} from "antd/lib/cascader"
+import Content_List from "./Content_List"
+import Motioner from "../../helpers/Motioner"
 
 const Content_Page = () => {
 	const {id, sub} = useParams()
@@ -30,7 +32,7 @@ const Content_Page = () => {
 	}
 
 	return (
-		<Row>
+		<Motioner>
 			<Row align="middle" justify="center" style={{width: "100%"}}>
 				{/* <BackButton /> */}
 				<Cascader
@@ -51,7 +53,10 @@ const Content_Page = () => {
 					}}
 				/>
 			</Row>
-		</Row>
+			<Row>
+				<Content_List cat={id ? id : undefined} sub={sub ? sub : undefined} />
+			</Row>
+		</Motioner>
 	)
 }
 

@@ -1,10 +1,14 @@
 import {createBrowserHistory} from "history"
 import Text from "antd/lib/typography/Text"
-import React from "react"
+import React, {CSSProperties, useState} from "react"
 import {motion} from "framer-motion"
-import {Row} from "antd"
+import {Row, Tooltip, Popconfirm, Button} from "antd"
 import Title from "antd/lib/typography/Title"
 import Motioner from "./Motioner"
+import {theme} from "../../Theme"
+import Paragraph, {ParagraphProps} from "antd/lib/typography/Paragraph"
+import {AvatarProps, Avatar} from "evergreen-ui"
+import eventEmitter, {eventStrings} from "./EventEmitters"
 export const sideHistory = createBrowserHistory()
 
 export const ErrorLabel = (text: string | any) => {
@@ -23,9 +27,11 @@ export const ErrorLabel = (text: string | any) => {
 
 export const Heading = (props: any) => {
 	return (
-		<Motioner style={{marginBottom: 35}}>
+		<Motioner>
 			<Row>
-				<Title level={2}>{props.children}</Title>
+				<Title level={2} style={{textTransform: "capitalize"}}>
+					{props.children}
+				</Title>
 			</Row>
 		</Motioner>
 	)
@@ -35,7 +41,7 @@ export const SubHeading = (props: any) => {
 	return (
 		<Motioner style={{marginBottom: 5}}>
 			<Row>
-				<span style={{textShadow: "0px 0px .5px rgba(90,90,90,.1)", fontSize: ".9rem", fontWeight: "bold"}}>
+				<span style={{textShadow: "0px 0px .5px rgba(90,90,90,.1)", fontSize: ".75rem", fontWeight: "bold"}}>
 					{props.children}
 				</span>
 			</Row>
@@ -48,6 +54,80 @@ export const SectionText = (props: any) => {
 		<Motioner style={{marginBottom: 5}}>
 			<Row>
 				<span style={{textShadow: "0px 0px .5px rgba(90,90,90,.1)", fontSize: "1.05rem", fontWeight: "bold"}}>
+					{props.children}
+				</span>
+			</Row>
+		</Motioner>
+	)
+}
+
+export const HintText = (props: any) => {
+	return (
+		<Motioner style={{marginBottom: 5}}>
+			<Row>
+				<span
+					style={{
+						fontSize: ".7rem",
+						fontWeight: "normal",
+						color: theme.text_extra_light,
+					}}>
+					{props.children}
+				</span>
+			</Row>
+		</Motioner>
+	)
+}
+
+export const TextParaGraph = (props: ParagraphProps) => {
+	const syle: CSSProperties = {
+		color: theme.text_extra_light,
+		fontSize: ".9rem",
+		textAlign: "left",
+		...props.style,
+	}
+	return (
+		<Motioner>
+			<Paragraph style={syle} ellipsis={props.ellipsis}>
+				{props.children}
+			</Paragraph>
+		</Motioner>
+	)
+}
+
+interface AAVProps {
+	props?: AvatarProps
+	item: any
+}
+
+export const AAvatar = (props: AAVProps) => {
+	return (
+		<div>
+			<Motioner motion={{whileHover: {scale: 2.1}}}>
+				<Tooltip mouseEnterDelay={1.5} title={`view ${props.item.username} profile`}>
+					<div
+						style={{cursor: "pointer"}}
+						onClick={() => {
+							eventEmitter.emit(eventStrings.showOtherProfile, props.item)
+						}}>
+						<Avatar style={{boxShadow: "0px 0px 5px rgba(100,100,100,.08)"}} name={props.item.username} size={45} />
+					</div>
+				</Tooltip>
+			</Motioner>
+		</div>
+	)
+}
+
+export const HintContentText = (props: any) => {
+	return (
+		<Motioner style={{marginBottom: 5}}>
+			<Row>
+				<span
+					style={{
+						// textShadow: "0px 0px .5px rgba(90,90,90,.1)",
+						fontSize: ".9rem",
+						fontWeight: "lighter",
+						color: theme.text_light,
+					}}>
 					{props.children}
 				</span>
 			</Row>

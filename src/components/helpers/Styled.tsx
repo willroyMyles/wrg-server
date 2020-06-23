@@ -1,8 +1,9 @@
 import styled from "styled-components"
+import {Input} from "antd"
 
-export const Winput = styled.input`
+export const Winput = styled(Input)`
 	padding: 10;
-	background-color: white;
+	// background-color: red;
 	border-radius: 7px;
 	margin: 5px;
 `
