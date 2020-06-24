@@ -13,7 +13,7 @@ const Motioner = (props: Props) => {
 	const val = motionValues.Scale_Small
 	return (
 		<AnimatePresence>
-			<motion.div style={props.style} initial={val} animate={motionValues.in} exit={val}>
+			<motion.div style={{...props.style}} initial={val} animate={motionValues.in} exit={val}>
 				{props.children}
 			</motion.div>
 		</AnimatePresence>

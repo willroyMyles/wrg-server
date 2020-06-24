@@ -2,6 +2,7 @@ import axios, {AxiosRequestConfig} from "axios"
 import {stringify} from "querystring"
 import {message, Row} from "antd"
 import moment from "moment"
+import qs from "qs"
 
 const url = "http://localhost:8000/api/"
 axios.defaults.headers = {
@@ -98,6 +99,39 @@ export const getUserData = (userId: string) => {
 			})
 			.catch((err) => {
 				reject("ntht")
+			})
+	})
+}
+
+export const sendReply = (reply: string, postId: string) =>
+	new Promise((resolve, reject) => {
+		const data = {reply: reply, id: postId}
+		axios
+			.post(url + "reply", stringify(data))
+			.then((res) => {
+				console.log(res)
+
+				resolve(res.data)
+			})
+			.catch((err) => reject(err))
+	})
+
+export const getReplies = (replyIds: Array<string>) => {
+	console.log(replyIds)
+
+	const headers: AxiosRequestConfig = {
+		headers: {
+			ids: JSON.stringify(replyIds),
+		},
+	}
+	return new Promise((resolve, reject) => {
+		axios
+			.get(url + "reply", headers)
+			.then((res) => {
+				resolve(res.data)
+			})
+			.catch((err) => {
+				reject(err)
 			})
 	})
 }

@@ -1,5 +1,14 @@
 import {action, observable, autorun, computed} from "mobx"
-import {sendCreatePost, register, login, getPosts, getStatictics, getUserData} from "../api_layer/Api_version_1"
+import {
+	sendCreatePost,
+	register,
+	login,
+	getPosts,
+	getStatictics,
+	getUserData,
+	sendReply,
+	getReplies,
+} from "../api_layer/Api_version_1"
 import {localStorageStrings} from "../components/helpers/Helpers_Index"
 import eventEmitter, {eventStrings} from "../components/helpers/EventEmitters"
 import dataProvider from "./DataProvider"
@@ -27,6 +36,7 @@ class Store {
 	@observable postLimit = 5
 	@observable statictics: Map<number, any> = new Map()
 	@observable currentOtherProfile: any = ""
+	@observable listOfReplies: Map<string, any> = new Map()
 
 	@action sendCreatePostData = (data: any) => {
 		data.make = data.make_model[0]
@@ -39,6 +49,38 @@ class Store {
 				.then((res) => {
 					this.postData.push(this.format(data))
 					if (res) resolve(true)
+				})
+				.catch((err) => {
+					resolve(false)
+				})
+		})
+	}
+
+	@action sendReply = (value: string, postId: string) => {
+		return new Promise((resolve) => {
+			sendReply(value, postId)
+				.then((res) => {
+					console.log(res)
+					resolve(true)
+				})
+				.catch((err) => resolve(false))
+		})
+	}
+
+	@action getReplies = (ids: Array<string>) => {
+		return new Promise((resolve) => {
+			if (this.listOfReplies.has(ids[0])) {
+				resolve(true)
+				return
+			}
+
+			getReplies(ids)
+				.then((res: any) => {
+					res.forEach((element: {_id: string; body: any}) => {
+						this.listOfReplies.set(element._id, element)
+					})
+
+					resolve(true)
 				})
 				.catch((err) => {
 					resolve(false)
