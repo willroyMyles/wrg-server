@@ -1,5 +1,5 @@
 import {action, observable, autorun, computed} from "mobx"
-import {sendCreatePost, register, login, getPosts} from "../api_layer/Api_version_1"
+import {sendCreatePost, register, login, getPosts, getStatictics, getUserData} from "../api_layer/Api_version_1"
 import {localStorageStrings} from "../components/helpers/Helpers_Index"
 import eventEmitter, {eventStrings} from "../components/helpers/EventEmitters"
 import dataProvider from "./DataProvider"
@@ -25,13 +25,14 @@ class Store {
 	@observable postOffset = 0
 
 	@observable postLimit = 5
+	@observable statictics: Map<number, any> = new Map()
+	@observable currentOtherProfile: any = ""
 
 	@action sendCreatePostData = (data: any) => {
 		data.make = data.make_model[0]
 		data.model = data.make_model[1]
 		data.category = data.cat_sub[0]
 		data.sub_category = data.cat_sub[1]
-		console.log(data)
 		data.userId = this.userId
 		return new Promise((resolve) => {
 			sendCreatePost(data)
@@ -61,7 +62,6 @@ class Store {
 		return new Promise((resolve) => {
 			getPosts(this.postOffset, this.postLimit)
 				.then((res: any) => {
-					console.log(res)
 					if (res.length != 0) this.postOffset += this.postLimit
 					res.forEach((element: any) => {
 						element = this.format(element)
@@ -114,6 +114,40 @@ class Store {
 
 	@observable isLoggedIn = () => this.userId != ""
 
+	@action getStatictics = () => {
+		return new Promise((resolve, reject) => {
+			getStatictics()
+				.then((res: any) => {
+					res.forEach((element: any) => {
+						this.statictics.set(Number.parseInt(element._id), element)
+					})
+
+					resolve(true)
+				})
+				.catch((err) => {
+					resolve(false)
+				})
+		})
+	}
+
+	@action getUserData = (userId: string) => {
+		return new Promise((resolve) => {
+			if (userId == this.currentOtherProfile._id) {
+				resolve(this.currentOtherProfile)
+				return
+			}
+
+			getUserData(userId)
+				.then((res: any) => {
+					// resolve(true)
+					this.currentOtherProfile = res
+					resolve(res)
+				})
+				.catch((err) => {
+					resolve(false)
+				})
+		})
+	}
 	a = autorun((escape: any) => {
 		if (this.username != localStorage.getItem(localStorageStrings.user_name))
 			localStorage.setItem(localStorageStrings.user_name, this.username)

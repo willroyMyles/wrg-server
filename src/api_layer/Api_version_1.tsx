@@ -11,12 +11,9 @@ axios.defaults.headers = {
 export const sendCreatePost = (data: any) => {
 	data.year = moment(data.year._d).format("YYYY")
 	return new Promise((resolve, reject) => {
-		console.log("posting", stringify(data))
 		axios
 			.post(url + "post/create", stringify(data))
 			.then((res) => {
-				console.log(res)
-
 				//display toast
 				if (res) resolve(res)
 			})
@@ -47,12 +44,10 @@ export const getPosts = (offset: number, limit: number) => {
 }
 
 export const register = (data: any) => {
-	console.log(data)
 	return new Promise((resolve, reject) => {
 		axios
 			.post(url + "signup", stringify(data))
 			.then((res) => {
-				console.log(res)
 				if (res) resolve(res)
 			})
 			.catch((err) => {
@@ -70,6 +65,39 @@ export const login = (data: any) => {
 			})
 			.catch((err) => {
 				reject(err)
+			})
+	})
+}
+
+export const getStatictics = () => {
+	return new Promise((resolve, reject) => {
+		axios
+			.get(url + "stats")
+			.then((res) => {
+				resolve(res.data)
+			})
+			.catch((err) => {
+				reject(false)
+			})
+	})
+}
+
+export const getUserData = (userId: string) => {
+	const headers: AxiosRequestConfig = {
+		headers: {
+			userId: userId,
+		},
+	}
+
+	return new Promise((resolve, reject) => {
+		axios
+			.get(url + "user", headers)
+			.then((res) => {
+				console.log(res)
+				resolve(res.data)
+			})
+			.catch((err) => {
+				reject("ntht")
 			})
 	})
 }

@@ -33,7 +33,6 @@ const Content_Holder = () => {
 		})
 		eventEmitter.on(eventStrings.categoriesSelected, () => {
 			sideHistory.push("/category")
-			console.log(sideHistory.length)
 		})
 		eventEmitter.on(eventStrings.category, (index) => {
 			sideHistory.push(`/category/${index}`)
@@ -71,6 +70,7 @@ const Content_Holder = () => {
 		<Layout id="holder" style={{backgroundColor: theme.faint, padding: 10}}>
 			<Layout.Content>
 				<Drawer
+					destroyOnClose
 					width={bp.xs ? "100%" : "78%"}
 					drawerStyle={{backgroundColor: theme.faint}}
 					visible={visible}

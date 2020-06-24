@@ -50,19 +50,15 @@ export default class Content_List extends PureComponent<IProps, any> {
 	getMorePosts = () => {
 		this.setState({loading: true})
 		dataExchanger.getPosts().then((res) => {
-			console.log(res)
 			if (res) {
 				if (res == 100) {
-					console.log("no more posts")
 					this.setState({morePosts: false, loading: false})
 					this.forceUpdate()
-					console.log(this.state.data)
 
 					return
 				}
 				this.setState({data: dataExchanger.postData})
 			} else {
-				console.log("no more posts")
 				this.setState({loading: false})
 			}
 		})

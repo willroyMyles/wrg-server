@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Row, Col, Descriptions, Drawer} from "antd"
 import {observer} from "mobx-react"
 import dataProvider from "../../../data_layer/DataProvider"
@@ -13,11 +13,21 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import {Heading, SubHeading, SectionText} from "../../helpers/Helpers_Index"
 const Content_Category = observer(() => {
 	const bp = useBreakpoint()
+	const [data, setData] = useState(dataExchanger.statictics)
+
+	useEffect(() => {
+		dataExchanger.getStatictics().then((res) => {
+			if (res) {
+				setData(dataExchanger.statictics)
+			} else {
+			}
+		})
+	}, [])
 
 	return (
 		<Motioner>
 			<Heading>Categories</Heading>
-			<Row gutter={[1, 1]} style={{width: "100%"}}>
+			<Row gutter={[1, 10]} style={{width: "100%"}}>
 				{dataProvider.headers.map((value, index) => {
 					return (
 						<Col span={24}>
@@ -49,10 +59,10 @@ const Content_Category = observer(() => {
 								<Row style={{margin: 20}}>
 									<Descriptions>
 										<DescriptionsItem label="posts today">0</DescriptionsItem>
-										<DescriptionsItem label="total posts">0</DescriptionsItem>
-										<DescriptionsItem label="total viewed">0</DescriptionsItem>
-										<DescriptionsItem label="total pending">0</DescriptionsItem>
-										<DescriptionsItem label="total filled">0</DescriptionsItem>
+										<DescriptionsItem label="total posts">{data.get(index)?.total}</DescriptionsItem>
+										<DescriptionsItem label="total available">{data.get(index)?.available}</DescriptionsItem>
+										<DescriptionsItem label="total pending">{data.get(index)?.pending}</DescriptionsItem>
+										<DescriptionsItem label="total filled">{data.get(index)?.filled}</DescriptionsItem>
 									</Descriptions>
 								</Row>
 							</div>
