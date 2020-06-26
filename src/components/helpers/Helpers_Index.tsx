@@ -136,11 +136,19 @@ export const HintContentText = (props: any) => {
 }
 
 export const motionValues = {
-	in: {opacity: 1, y: 0, scale: 1, x: 0},
-	Scale_Big: {scale: 3, opacity: 0},
+	in: {opacity: 1, y: 0, scale: 1, x: 0, scaleX: 1, scaleY: 1, translateY: 0},
+	Scale_Big: {scale: 3, opacity: 0.7},
 	Scale_Small: {scale: 0.3, opacity: 0},
 	Fade: {opacity: 0},
 	from_left: {y: -1000, opacity: 0.5},
+	Scale_x: {opacity: 0.3, scaleX: 0, x: 0, y: 0},
+	Height: {scale: 0, opacity: 0, translateY: -200},
+	none: {},
+	spring: {
+		type: "spring",
+		damping: 20,
+		stiffness: 300,
+	},
 
 	transition: {duration: 0.3},
 }

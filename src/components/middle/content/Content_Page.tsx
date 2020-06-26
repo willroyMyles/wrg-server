@@ -6,13 +6,13 @@ import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
 import {CascaderValueType} from "antd/lib/cascader"
 import Content_List from "./Content_List"
 import Motioner from "../../helpers/Motioner"
+import Content_List_2 from "./Content_List_2"
 
 const Content_Page = () => {
 	const {id, sub} = useParams()
 	const [cat] = useState<string>(dataProvider.headers[Number.parseInt(id)])
-	const subCat: string | undefined = dataProvider.data[Number.parseInt(id)][sub]
-	const [] = useState(true)
-
+	const [subCat] = useState(dataProvider.data[Number.parseInt(id)][sub])
+	const [count, setCount] = useState(0)
 	const options = [
 		dataProvider.data.map((array, index) => {
 			return {
@@ -28,7 +28,8 @@ const Content_Page = () => {
 	]
 
 	const handleChange = (items: CascaderValueType) => {
-		eventEmitter.emit(eventStrings.sub_category, [items[0], items[1]])
+		setCount((prev) => prev + 1)
+		eventEmitter.emit(eventStrings.sub_category, [items[0], items[1], count])
 	}
 
 	return (
@@ -54,7 +55,7 @@ const Content_Page = () => {
 				/>
 			</Row>
 			<Row>
-				<Content_List cat={id ? id : undefined} sub={sub ? sub : undefined} />
+				<Content_List_2 cat={id ? id : undefined} sub={sub ? sub : undefined} />
 			</Row>
 		</Motioner>
 	)

@@ -1,83 +1,97 @@
-import React, {Component, PureComponent, useState, useEffect} from "react"
-import PropTypes from "prop-types"
-import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
-import Motioner from "../../helpers/Motioner"
-import {Row, List, Col, Button, Tooltip, BackTop} from "antd"
-import {observer} from "mobx-react"
+import React, {useState, useEffect} from "react"
+import {List, Row, Col, Tooltip, Button, BackTop} from "antd"
 import dataExchanger from "../../../data_layer/DataExchange"
-import Text from "antd/lib/typography/Text"
-import {SubHeading, HintText, TextParaGraph, AAvatar} from "../../helpers/Helpers_Index"
-import moment from "moment"
+import Motioner from "../../helpers/Motioner"
 import {theme} from "../../../Theme"
-import Paragraph from "antd/lib/typography/Paragraph"
-import {blue} from "@ant-design/colors"
-import {Avatar} from "evergreen-ui"
-import randomColor from "randomcolor"
+import {AAvatar, SubHeading, HintText, TextParaGraph} from "../../helpers/Helpers_Index"
+import moment from "moment"
+import {
+	BsThreeDotsVertical,
+	BsChat,
+	BsEye,
+	BsPaperclip,
+	BsArrowRight,
+	BsArrowUp,
+	BsHeart,
+	BsFillHeartFill,
+} from "react-icons/bs"
 import Content_View_Post from "./Content_View_Post"
-import {BsThreeDotsVertical, BsArrowBarRight, BsArrowRight, BsChat, BsEye, BsPaperclip} from "react-icons/bs"
-import {AnimatePresence} from "framer-motion"
+import Text from "antd/lib/typography/Text"
 import dataProvider from "../../../data_layer/DataProvider"
-import logger from "../../helpers/Logger"
 
-export class Content_List extends PureComponent<any> {
-	state = {
-		visible: false,
-		data: [],
-		currentIndex: null,
-		morePosts: true,
-		loading: false,
+export const Content_List_2 = (props: any) => {
+	const [morePost, setMorePost] = useState(true)
+	const [data, setData] = useState<any>([])
+	const [visible, setVisible] = useState(false)
+	const [loading, setLoading] = useState(false)
+	const [currentIndex, setCurrentIndex] = useState<number | null>(null)
+	useEffect(() => {
+		setData(dataExchanger.postData)
+	}, [])
+
+	useEffect(() => {
+		console.log(props)
+		filterData()
+	}, [props])
+
+	const filterData = () => {
+		setLoading(true)
+		const categoryNumber = Number.parseInt(props.cat)
+		const subcategoryNumber = Number.parseInt(props.sub)
+		const category = dataProvider.headers[categoryNumber]
+		const subcategory = dataProvider.parts[categoryNumber][subcategoryNumber]
+
+		setData(
+			dataExchanger.postData.filter((value, index) => {
+				return value.category == category
+			})
+		)
+		setLoading(false)
 	}
 
-	filterData = () => {
-		this.setState({loading: true, data: dataExchanger.postData})
-		const catNum = Number.parseInt(this.props.cat)
-		const subNum = Number.parseInt(this.props.sub)
-		var category = dataProvider.headers[catNum]
-		var subcategory = dataProvider.parts[catNum][subNum]
-		var dataa = dataExchanger.postData.filter((value, index) => {
-			return value.category == category
-		})
-		console.log(dataa)
-		this.setState((state, props) => {
-			logger.log(state, props, this.state.data.length)
-			this.forceUpdate()
-			return {loading: false, data: dataa}
-		})
-	}
-
-	constructor(props: any) {
-		super(props)
-		eventEmitter.addListener(eventStrings.sub_category, (item) => {
-			// logger.log(item, "before filter")
-			this.filterData()
-		})
-	}
-
-	getMorePosts = () => {
-		this.setState({loading: true})
+	const getMorePosts = () => {
+		setLoading(true)
 		dataExchanger.getPosts().then((res) => {
 			if (res) {
 				if (res == 100) {
-					this.setState({morePosts: false, loading: false})
+					setLoading(false)
+
+					setMorePost(false)
 					return
 				}
-				this.filterData()
+				// setData(dataExchanger.postData)
+				filterData()
 			} else {
-				this.setState({loading: false})
+				setLoading(false)
 			}
 		})
 	}
 
-	render() {
-		return (
-			<Row>
-				<BackTop />
-				{this.state.data?.map((item: any, index: number) => {
-					var col = randomColor({seed: item.username})
+	return (
+		<Row style={{width: "100%"}}>
+			<BackTop>
+				<BsArrowUp />
+			</BackTop>
+			<List
+				style={{width: "100%"}}
+				dataSource={data}
+				loading={loading}
+				footer={
+					<Text>
+						<BsFillHeartFill />
+					</Text>
+				}
+				renderItem={(item: any, index: number) => {
 					return (
 						<Motioner
-							style={{width: "100%", marginTop: 29, backgroundColor: theme.text_white, padding: 20, borderRadius: 4}}>
-							{this.state.currentIndex != index && (
+							style={{
+								width: "100%",
+								marginTop: 29,
+								backgroundColor: theme.text_white,
+								padding: 20,
+								borderRadius: 4,
+							}}>
+							{currentIndex != index && (
 								<Row
 									style={{width: "100%"}}
 									onClick={() => {
@@ -91,7 +105,7 @@ export class Content_List extends PureComponent<any> {
 												top: "0%",
 												left: -20,
 												width: 3,
-												backgroundColor: col,
+												// backgroundColor: col,
 											}}
 										/>
 										<AAvatar item={item} />
@@ -153,7 +167,8 @@ export class Content_List extends PureComponent<any> {
 											<Col>
 												<Button
 													onClick={() => {
-														this.setState({visible: true, currentIndex: index})
+														setVisible(true)
+														setCurrentIndex(index)
 													}}
 													// type="text"
 													style={{
@@ -168,21 +183,21 @@ export class Content_List extends PureComponent<any> {
 									</Col>
 								</Row>
 							)}
-							{this.state.visible && this.state.currentIndex == index && (
+							{visible && currentIndex == index && (
 								<Motioner>
-									<Content_View_Post onClick={() => this.setState({currentIndex: null})} item={item} />
+									<Content_View_Post onClick={() => setCurrentIndex(null)} item={item} />
 								</Motioner>
 							)}
 						</Motioner>
 					)
-				})}
-				<Row justify="center" align="middle" style={{marginTop: 20, marginBottom: 30, width: "100%"}}>
-					<Col>{this.state.morePosts && <Button onClick={() => this.getMorePosts()}>load more !</Button>}</Col>
-					<Col>{!this.state.morePosts && <SubHeading>no more posts</SubHeading>}</Col>
-				</Row>
+				}}
+			/>
+			<Row justify="center" align="middle" style={{marginTop: 20, marginBottom: 30, width: "100%"}}>
+				<Col>{morePost && <Button onClick={() => getMorePosts()}>load more !</Button>}</Col>
+				<Col>{!morePost && <SubHeading>no more posts</SubHeading>}</Col>
 			</Row>
-		)
-	}
+		</Row>
+	)
 }
 
-export default Content_List
+export default Content_List_2

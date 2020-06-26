@@ -188,7 +188,7 @@ const Content_Create_Post = observer(() => {
 					</Row>
 					<Row justify="center" style={{marginTop: 30}}>
 						<Col span={24}>
-							<Button loading={loading} htmlType="submit" block>
+							<Button type="primary" loading={loading} htmlType="submit" block>
 								Submit
 							</Button>
 						</Col>
