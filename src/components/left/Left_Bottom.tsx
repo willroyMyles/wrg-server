@@ -20,7 +20,7 @@ import {theme} from "../../Theme"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import Motioner from "../helpers/Motioner"
 import {Winput} from "../helpers/Styled"
-import {SubHeading} from "../helpers/Helpers_Index"
+import {SubHeading, SectionText} from "../helpers/Helpers_Index"
 import {Avatar} from "evergreen-ui"
 
 const Left_Bottom = observer(() => {
@@ -43,7 +43,7 @@ const Left_Bottom = observer(() => {
 	}, [dataExchanger.userId])
 
 	return (
-		<Row align="middle" justify="center" style={{padding: 10}}>
+		<Row justify="start" style={{padding: 15, marginLeft: 15, border: "0px solid black"}}>
 			<Col>
 				{!dataExchanger.isLoggedIn() && (
 					<Tooltip placement="right" title="Login / Register">
@@ -64,9 +64,9 @@ const Left_Bottom = observer(() => {
 						<Motioner
 							style={{
 								border: "none",
-								backgroundColor: "rgba(255,255,255,.95)",
-								boxShadow: "0px 0px 5px rgba(0,0,0,.05)",
-								padding: 15,
+								// backgroundColor: "rgba(255,255,255,.95)",
+								// boxShadow: "0px 0px 5px rgba(0,0,0,.05)",
+								padding: 0,
 								borderRadius: 7,
 								marginBottom: 10,
 								width: "100%",
@@ -76,29 +76,35 @@ const Left_Bottom = observer(() => {
 								justify="space-between"
 								onClick={() => eventEmitter.emit(eventStrings.settingsSelected)}>
 								<Col>
-									<Row align="middle">
-										<Col>
-											<Avatar
-												style={{boxShadow: "0px 0px 15px rgba(0,0,0,.04)"}}
-												size={35}
-												name={dataExchanger.username}
-												hashValue={theme.secondary_Color}
-											/>
-										</Col>
-										{bp.sm && (
-											<Col style={{marginLeft: 7}}>
-												<SubHeading>Good Morning, {dataExchanger.username}</SubHeading>
-											</Col>
-										)}
+									<Row>
+										<Avatar
+											isSolid
+											style={{boxShadow: "0px 0px 15px rgba(0,0,0,.03)", marginTop: 2, marginBottom: 15}}
+											size={45}
+											name={dataExchanger.username}
+											hashValue={theme.secondary_Color}
+										/>
 									</Row>
-									<Row align="middle" justify="space-between" style={{marginTop: 7, margin: 5}}>
+									<Row>
+										<Text
+											style={{
+												textTransform: "capitalize",
+												textShadow: "0px 0px 1px rgba(0,0,0,.3)",
+												fontWeight: "bold",
+												marginBottom: 3,
+											}}>
+											{dataExchanger.username}
+										</Text>
+									</Row>
+									<Row>{bp.sm && <Text style={{fontSize: 12}}>Good Morning, </Text>}</Row>
+									{/* <Row align="middle" justify="space-between" style={{marginTop: 7, margin: 5}}>
 										<Col style={{cursor: "pointer", marginTop: 5}}>
 											<BsGear size={20} />
 										</Col>
 										<Col>
 											<BsBoxArrowLeft size={20} />
 										</Col>
-									</Row>
+									</Row> */}
 								</Col>
 							</Row>
 						</Motioner>

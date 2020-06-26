@@ -11,7 +11,7 @@ const LeftHolder = () => {
 	const bp = useBreakpoint()
 	return (
 		<Row
-			align="middle"
+			// align="middle"
 			justify="space-between"
 			style={{
 				height: "100vh",
@@ -23,10 +23,11 @@ const LeftHolder = () => {
 				paddingBottom: 5,
 				// boxShadow: "7px 0px 10px rgba(100,100,100,.1)",
 			}}>
-			<Left_Top />
+			<Left_Bottom />
 			<Left_Middle />
 			<div />
-			<Left_Bottom />
+			<div />
+			{/* <Left_Top /> */}
 		</Row>
 	)
 }
