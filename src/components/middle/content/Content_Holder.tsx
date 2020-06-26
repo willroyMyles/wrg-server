@@ -1,5 +1,5 @@
 import React, {useState, ReactNode, useEffect} from "react"
-import {Layout, Drawer, Modal} from "antd"
+import {Layout, Drawer, Modal, Row, Col} from "antd"
 import {Router, Switch, Route} from "react-router-dom"
 import {sideHistory} from "../../helpers/Helpers_Index"
 import Content_Category from "./Content_Category"
@@ -67,16 +67,17 @@ const Content_Holder = () => {
 	}, [])
 
 	return (
-		<Layout id="holder" style={{backgroundColor: theme.faint, padding: 10}}>
-			<Layout.Content>
+		<Layout id="holder">
+			<Layout.Content style={{backgroundColor: theme.faint}}>
 				<Drawer
 					destroyOnClose
 					width={bp.xs ? "100%" : "78%"}
-					drawerStyle={{backgroundColor: theme.faint}}
+					// drawerStyle={{backgroundColor: theme.faint}}
 					visible={visible}
 					onClose={() => setVisible(false)}>
 					<div>{node}</div>
 				</Drawer>
+
 				<Router history={sideHistory}>
 					<Switch>
 						<Route path="/" exact component={Content_Home} />

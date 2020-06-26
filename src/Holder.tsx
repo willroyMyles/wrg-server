@@ -25,11 +25,12 @@ const Holder = () => {
 				style={{
 					height: "100vh",
 					overflow: "scroll",
-					paddingLeft: breakPoint.xs ? 3 : 35,
+					// paddingLeft:
+					padding: breakPoint.xs ? 3 : 35,
 					zIndex: 2,
-					backgroundColor: theme.faint,
+					backgroundColor: "transparent",
 				}}>
-				<Middle_Header />
+				{/* <Middle_Header /> */}
 				<Middle_Holder />
 			</Layout.Content>
 		</Layout>

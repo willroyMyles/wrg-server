@@ -1,19 +1,9 @@
 import React, {useState} from "react"
-import {Router, Switch, Route} from "react-router-dom"
-import {sideHistory} from "../helpers/Helpers_Index"
-import {Row, Button, Menu} from "antd"
 import LeftMiddle_Default from "./view/LeftMiddle_Default"
-import randomColor from "randomcolor"
-import Left_Default from "./view/Left_Default"
-import {BsHouseDoor, BsList} from "react-icons/bs"
-import Text from "antd/lib/typography/Text"
-import Motioner from "../helpers/Motioner"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
-import eventEmitter, {eventStrings} from "../helpers/EventEmitters"
 
 const Left_Middle = () => {
-	const [defaultVisible, setDefaultVisible] = useState(true)
-	const bp = useBreakpoint()
+	const [] = useState(true)
 
 	return (
 		<LeftMiddle_Default />

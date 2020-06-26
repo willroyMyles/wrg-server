@@ -9,7 +9,7 @@ import {theme} from "../../Theme"
 const Middle_Holder = () => {
 	return (
 		<Layout>
-			<Layout.Content>
+			<Layout.Content style={{backgroundColor: "transparent"}}>
 				<Content_Holder />
 			</Layout.Content>
 		</Layout>

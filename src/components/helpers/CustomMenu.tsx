@@ -1,6 +1,6 @@
 import React, {SVGProps, useState} from "react"
 import Text from "antd/lib/typography/Text"
-import {Row} from "antd"
+import {Row, Col} from "antd"
 import Motioner from "./Motioner"
 import {IconType} from "react-icons/lib"
 import {motion} from "framer-motion"
@@ -9,6 +9,7 @@ import eventEmitter from "./EventEmitters"
 
 const CustomMenu = ({objects}: {objects: Array<any>}) => {
 	const [index, setIndex] = useState(-1)
+	const [refer, setRefer] = useState<any>()
 
 	return (
 		<Motioner style={{width: "100%"}}>
@@ -22,6 +23,8 @@ const CustomMenu = ({objects}: {objects: Array<any>}) => {
 						whileHover={{backgroundColor: "rgba(200,200,200,.2)"}}
 						whileTap={{scale: [1, 0.99, 1.04]}}>
 						<Row
+							id="ref"
+							ref={(e) => setRefer(e)}
 							onClick={() => {
 								setIndex(idx)
 								eventEmitter.emit(value.event)
@@ -34,8 +37,10 @@ const CustomMenu = ({objects}: {objects: Array<any>}) => {
 								style={{
 									position: "absolute",
 									left: 0,
-									width: "3%",
-									height: "4.8%",
+									// top: 0,
+									// marginBottom: document.getElementById("ref")?.clientHeight,
+									width: "2%",
+									height: document.getElementById("ref")?.clientHeight,
 									backgroundColor: theme.primary_color,
 									borderRadius: 0,
 									opacity: selected ? 0.7 : 0,

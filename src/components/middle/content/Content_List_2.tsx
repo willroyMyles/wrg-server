@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {List, Row, Col, Tooltip, Button, BackTop} from "antd"
+import {List, Row, Col, Tooltip, Button, BackTop, Divider} from "antd"
 import dataExchanger from "../../../data_layer/DataExchange"
 import Motioner from "../../helpers/Motioner"
 import {theme} from "../../../Theme"
@@ -83,112 +83,117 @@ export const Content_List_2 = (props: any) => {
 				}
 				renderItem={(item: any, index: number) => {
 					return (
-						<Motioner
-							style={{
-								width: "100%",
-								marginTop: 29,
-								backgroundColor: theme.text_white,
-								padding: 20,
-								borderRadius: 4,
-							}}>
-							{currentIndex != index && (
-								<Row
-									style={{width: "100%"}}
-									onClick={() => {
-										// eventEmitter.emit(eventStrings.PostSelected, item)
-									}}>
-									<Col span={3}>
-										<div
-											style={{
-												height: "40%",
-												position: "absolute",
-												top: "0%",
-												left: -20,
-												width: 3,
-												// backgroundColor: col,
-											}}
-										/>
-										<AAvatar item={item} />
-									</Col>
-									<Col span={20} offset={1}>
-										<Row align="middle" justify="space-between">
-											<Col>
-												<SubHeading>{item.username}</SubHeading>
-												<SubHeading>{item.title}</SubHeading>
-											</Col>
-											<Col>
-												<Row align="middle">
-													<HintText>{moment(item.time).fromNow()}</HintText>
-													<Tooltip title="more options">
-														<Button
-															type="text"
-															onClick={() => console.log("vertical")}
-															style={{border: "none"}}
-															icon={<BsThreeDotsVertical opacity={0.6} />}
-														/>
-													</Tooltip>
-												</Row>
-											</Col>
-										</Row>
-										<Row style={{marginTop: 12, marginBottom: 5}}>
-											<TextParaGraph ellipsis={{rows: 2}}>{item.body}</TextParaGraph>
-										</Row>
-										<Row id="bottom row" gutter={[24, 0]}>
-											<Col>
-												<Tooltip title={`${item.replies.length} comments`}>
-													<Row align="middle" style={{opacity: 0.6}}>
-														<Text>{item.replies.length} </Text>
-														<BsChat strokeWidth={0.3} style={{marginLeft: 7}} size={14} />
-													</Row>
-												</Tooltip>
-											</Col>
-											<Col>
-												<Tooltip title={`${item.replies.length} views`}>
-													<Row align="middle" style={{opacity: 0.6}}>
-														<Text>0 </Text>
-														<BsEye strokeWidth={0.3} style={{marginLeft: 7}} size={16} />
-													</Row>
-												</Tooltip>
-											</Col>
-											<Col>
-												<Tooltip title={`${item.replies.length} attatchments`}>
-													<Row align="middle" style={{opacity: 0.6}}>
-														<Text>0 </Text>
-														<BsPaperclip
-															rotate={45}
-															strokeWidth={0.2}
-															style={{marginLeft: 7, transform: "rotate(45deg)"}}
-															size={16}
-														/>
-													</Row>
-												</Tooltip>
-											</Col>
-											<Col flex="auto"></Col>
-											<Col>
-												<Button
-													onClick={() => {
-														setVisible(true)
-														setCurrentIndex(index)
-													}}
-													// type="text"
-													style={{
-														boxShadow: "5px 5px 0px rgba(200,200,200,.0)",
-													}}>
+						<div>
+							<Motioner
+								style={{
+									width: "100%",
+									marginTop: 29,
+									// backgroundColor: "rgba(240,242,245,.2)",
+									padding: 20,
+									borderRadius: 4,
+									// border: "1px solid rgba(100,100,100,.2)",
+									// boxShadow: "5px 5px 3px rgba(100,100,100,.05)",
+								}}>
+								{currentIndex != index && (
+									<Row
+										style={{width: "100%"}}
+										onClick={() => {
+											// eventEmitter.emit(eventStrings.PostSelected, item)
+										}}>
+										<Col span={3}>
+											<div
+												style={{
+													height: "40%",
+													position: "absolute",
+													top: "0%",
+													left: -20,
+													width: 3,
+													// backgroundColor: col,
+												}}
+											/>
+											<AAvatar item={item} />
+										</Col>
+										<Col span={20} offset={1}>
+											<Row align="middle" justify="space-between">
+												<Col>
+													<SubHeading>{item.username}</SubHeading>
+													<SubHeading>{item.title}</SubHeading>
+												</Col>
+												<Col>
 													<Row align="middle">
-														View Content {"  "} <BsArrowRight size={25} />
+														<HintText>{moment(item.time).fromNow()}</HintText>
+														<Tooltip title="more options">
+															<Button
+																type="text"
+																onClick={() => console.log("vertical")}
+																style={{border: "none"}}
+																icon={<BsThreeDotsVertical opacity={0.6} />}
+															/>
+														</Tooltip>
 													</Row>
-												</Button>
-											</Col>
-										</Row>
-									</Col>
-								</Row>
-							)}
-							{visible && currentIndex == index && (
-								<Motioner>
-									<Content_View_Post onClick={() => setCurrentIndex(null)} item={item} />
-								</Motioner>
-							)}
-						</Motioner>
+												</Col>
+											</Row>
+											<Row style={{marginTop: 12, marginBottom: 5}}>
+												<TextParaGraph ellipsis={{rows: 2}}>{item.body}</TextParaGraph>
+											</Row>
+											<Row id="bottom row" gutter={[24, 0]}>
+												<Col>
+													<Tooltip title={`${item.replies.length} comments`}>
+														<Row align="middle" style={{opacity: 0.6}}>
+															<Text>{item.replies.length} </Text>
+															<BsChat strokeWidth={0.3} style={{marginLeft: 7}} size={14} />
+														</Row>
+													</Tooltip>
+												</Col>
+												<Col>
+													<Tooltip title={`${item.replies.length} views`}>
+														<Row align="middle" style={{opacity: 0.6}}>
+															<Text>0 </Text>
+															<BsEye strokeWidth={0.3} style={{marginLeft: 7}} size={16} />
+														</Row>
+													</Tooltip>
+												</Col>
+												<Col>
+													<Tooltip title={`${item.replies.length} attatchments`}>
+														<Row align="middle" style={{opacity: 0.6}}>
+															<Text>0 </Text>
+															<BsPaperclip
+																rotate={45}
+																strokeWidth={0.2}
+																style={{marginLeft: 7, transform: "rotate(45deg)"}}
+																size={16}
+															/>
+														</Row>
+													</Tooltip>
+												</Col>
+												<Col flex="auto"></Col>
+												<Col>
+													<Button
+														onClick={() => {
+															setVisible(true)
+															setCurrentIndex(index)
+														}}
+														// type="text"
+														style={{
+															boxShadow: "5px 5px 0px rgba(200,200,200,.0)",
+														}}>
+														<Row align="middle">
+															View Content {"  "} <BsArrowRight size={25} />
+														</Row>
+													</Button>
+												</Col>
+											</Row>
+										</Col>
+									</Row>
+								)}
+								{visible && currentIndex == index && (
+									<Motioner>
+										<Content_View_Post onClick={() => setCurrentIndex(null)} item={item} />
+									</Motioner>
+								)}
+							</Motioner>
+							<Divider style={{borderColor: theme.text_extra_light, opacity: 0.4}} />
+						</div>
 					)
 				}}
 			/>

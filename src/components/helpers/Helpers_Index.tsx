@@ -53,7 +53,7 @@ export const SectionText = (props: any) => {
 	return (
 		<Motioner style={{marginBottom: 5}}>
 			<Row>
-				<span style={{textShadow: "0px 0px .5px rgba(90,90,90,.1)", fontSize: "1.05rem", fontWeight: "bold"}}>
+				<span style={{textShadow: "0px 0px .5px rgba(90,90,90,.1)", fontSize: ".9rem", fontWeight: "bold"}}>
 					{props.children}
 				</span>
 			</Row>

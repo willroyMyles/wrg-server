@@ -4,7 +4,6 @@ import {Row, Cascader} from "antd"
 import dataProvider from "../../../data_layer/DataProvider"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
 import {CascaderValueType} from "antd/lib/cascader"
-import Content_List from "./Content_List"
 import Motioner from "../../helpers/Motioner"
 import Content_List_2 from "./Content_List_2"
 
@@ -45,8 +44,8 @@ const Content_Page = () => {
 					defaultValue={[cat, subCat]}
 					style={{
 						width: "80%",
-						backgroundColor: "transparent",
-						border: "2px solid grey",
+						// backgroundColor: "transparent",
+						border: "0px solid grey",
 						fontWeight: "bold",
 					}}
 					displayRender={(label) => {

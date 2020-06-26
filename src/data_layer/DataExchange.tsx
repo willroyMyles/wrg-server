@@ -27,6 +27,7 @@ class Store {
 	@observable userId = localStorage.getItem(localStorageStrings.user_id) || ""
 
 	@observable tempUsername = ""
+	@observable userObject: any = {}
 
 	@observable username = localStorage.getItem(localStorageStrings.user_name) || ""
 
@@ -145,6 +146,7 @@ class Store {
 					if (res.data) {
 						this.username = res.data.username
 						this.userId = res.data.id
+						this.userObject = res.data
 						resolve(true)
 					} else resolve(false)
 				})
