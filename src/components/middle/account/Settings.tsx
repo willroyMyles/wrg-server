@@ -1,7 +1,7 @@
 import React from "react"
 import Motioner from "../../helpers/Motioner"
 import {Row, Button, notification, Space, Layout, Input, Col, Divider} from "antd"
-import {Heading, sideHistory, HintText, SectionText, SubHeading} from "../../helpers/Helpers_Index"
+import {Heading, sideHistory, HintText, SectionText, SubHeading, TextParaGraph} from "../../helpers/Helpers_Index"
 import {ConfirmButton} from "../../left/Left_Bottom"
 import {refreshStyles} from "less"
 import Text from "antd/lib/typography/Text"
@@ -25,9 +25,10 @@ const Settings = observer(() => {
 				<SectionText>User Name</SectionText>
 			</Row>
 			<Row justify="space-between">
-				<Text>
-					your user-name is <SubHeading>{dataExchanger.username}</SubHeading>
-				</Text>
+				<Row align="top">
+					<TextParaGraph>your user-name is</TextParaGraph>
+					<SubHeading style={{marginTop: 3, marginLeft: 4}}> {dataExchanger.username}</SubHeading>
+				</Row>
 				<Button type="ghost">Change</Button>
 			</Row>
 			<Divider style={{borderColor: theme.text_extra_light, opacity: 0.4}} />
@@ -36,9 +37,10 @@ const Settings = observer(() => {
 				<SectionText>Email Address</SectionText>
 			</Row>
 			<Row justify="space-between">
-				<Text>
-					your email adress is <SubHeading>emailaddress</SubHeading>
-				</Text>
+				<Row align="top">
+					<TextParaGraph>your email adress is</TextParaGraph>
+					<SubHeading style={{marginTop: 3, marginLeft: 4}}> emailaddress</SubHeading>
+				</Row>
 				<Button type="ghost">Change</Button>
 			</Row>
 			<Divider style={{borderColor: theme.text_extra_light, opacity: 0.4}} />

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {Row, Col, Descriptions, Drawer} from "antd"
+import {Row, Col, Descriptions, Drawer, List} from "antd"
 import {observer} from "mobx-react"
 import dataProvider from "../../../data_layer/DataProvider"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
@@ -11,6 +11,7 @@ import Title from "antd/lib/typography/Title"
 import {theme} from "../../../Theme"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import {Heading, SubHeading, SectionText} from "../../helpers/Helpers_Index"
+import {DescText} from "../account/Profile_View_Other"
 const Content_Category = observer(() => {
 	const bp = useBreakpoint()
 	const [data, setData] = useState(dataExchanger.statictics)
@@ -24,52 +25,53 @@ const Content_Category = observer(() => {
 		})
 	}, [])
 
+	const col = theme.primary_color.slice(0, 7)
+
 	return (
 		<Motioner>
 			<Heading>Categories</Heading>
-			<Row gutter={[1, 10]} style={{width: "100%"}}>
-				{dataProvider.headers.map((value, index) => {
+			<List
+				dataSource={dataProvider.headers}
+				grid={{gutter: 10, xl: 3, md: 2, sm: 2, xs: 1, lg: 3, xxl: 4}}
+				renderItem={(item, index) => {
 					return (
 						<Col span={24}>
 							<div
 								onClick={() => eventEmitter.emit(eventStrings.category, index)}
 								style={{
-									// margin: 17,
+									margin: 17,
 									padding: 10,
 									paddingLeft: 30,
 									paddingRight: 30,
 									backgroundColor: "white",
 									cursor: "pointer",
 									borderRadius: 4,
-									border: ".1px solid lightgrey",
-									borderBottom: `7px solid ${theme.primary_color}`,
-									boxShadow: "0px 0px 10px rgba(200,200,200,.3)",
+									border: ".1px solid rgba(100,100,100,.1)",
+									borderBottom: `2px solid ${col}55`,
+									boxShadow: `3px 3px 10px rgba(200,200,200,.3)`,
 								}}>
 								<Row>
-									<SectionText
-										style={{
-											// fontSize: ".8rem",
-											fontWeight: "bold",
-											color: "rgba(100,100,100,.7)",
-											textShadow: "0px 0px 3px rgba(200,200,200,.2)",
-										}}>
-										{value}
-									</SectionText>
+									<SectionText>{item}</SectionText>
 								</Row>
-								<Row style={{margin: 20}}>
-									<Descriptions>
-										<DescriptionsItem label="posts today">0</DescriptionsItem>
-										<DescriptionsItem label="total posts">{data.get(index)?.total}</DescriptionsItem>
-										<DescriptionsItem label="total available">{data.get(index)?.available}</DescriptionsItem>
-										<DescriptionsItem label="total pending">{data.get(index)?.pending}</DescriptionsItem>
-										<DescriptionsItem label="total filled">{data.get(index)?.filled}</DescriptionsItem>
-									</Descriptions>
+								<Row style={{marginTop: 20}} align="middle" justify="space-around" gutter={[20, 10]}>
+									<Col>
+										<DescText title="total" value={data.get(index)?.total | 0} />{" "}
+									</Col>
+									<Col>
+										<DescText title="available" value={data.get(index)?.available | 0} />{" "}
+									</Col>
+									<Col>
+										<DescText title="pending" value={data.get(index)?.pending | 0} />{" "}
+									</Col>
+									<Col>
+										<DescText title="filled" value={data.get(index)?.filled | 0} />{" "}
+									</Col>
 								</Row>
 							</div>
 						</Col>
 					)
-				})}
-			</Row>
+				}}
+			/>
 		</Motioner>
 	)
 })

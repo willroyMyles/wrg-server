@@ -8,6 +8,7 @@ import Text from "antd/lib/typography/Text"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import {observer} from "mobx-react"
 import dataExchanger from "../../../data_layer/DataExchange"
+import {CSSProperties} from "styled-components"
 
 const Profile_View_Other = observer(({item}: {item: any}) => {
 	const bp = useBreakpoint()
@@ -46,10 +47,10 @@ const Profile_View_Other = observer(({item}: {item: any}) => {
 				</Row>
 				<Row justify="space-around" style={{margin: 35}}>
 					<Col>
-						<DescText text1={"posts"} text2={userData?.postCount} />
+						<DescText title={"posts"} value={userData?.postCount} />
 					</Col>
 					<Col>
-						<DescText text1={"fulfilled"} text2="0" />
+						<DescText title={"fulfilled"} value="0" />
 					</Col>
 				</Row>
 				<Row justify="center">
@@ -65,14 +66,22 @@ const Profile_View_Other = observer(({item}: {item: any}) => {
 	)
 })
 
-export const DescText = ({text1, text2}: {text1: ReactNode; text2: ReactNode}) => {
+export const DescText = ({
+	title,
+	value,
+	valueStyle,
+}: {
+	title: ReactNode
+	value: ReactNode
+	valueStyle?: CSSProperties
+}) => {
 	return (
 		<Motioner>
 			<Row justify="center">
-				<HintText>{text1}</HintText>
+				<HintText textStyle={{textTransform: "capitalize"}}>{title}</HintText>
 			</Row>
 			<Row justify="center">
-				<Text>{text2}</Text>
+				<Text style={{fontWeight: "bold", opacity: 0.7}}>{value}</Text>
 			</Row>
 		</Motioner>
 	)

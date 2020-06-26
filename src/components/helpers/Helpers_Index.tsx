@@ -1,7 +1,7 @@
 import {createBrowserHistory} from "history"
 import Text from "antd/lib/typography/Text"
-import React, {CSSProperties, useState} from "react"
-import {motion} from "framer-motion"
+import React, {CSSProperties, useState, ReactNode} from "react"
+import {motion, MotionProps} from "framer-motion"
 import {Row, Tooltip, Popconfirm, Button} from "antd"
 import Title from "antd/lib/typography/Title"
 import Motioner from "./Motioner"
@@ -37,11 +37,21 @@ export const Heading = (props: any) => {
 	)
 }
 
-export const SubHeading = (props: any) => {
+interface SubHeadingProps {
+	style?: CSSProperties
+	children: ReactNode
+}
+export const SubHeading = (props: SubHeadingProps) => {
 	return (
 		<Motioner style={{marginBottom: 5}}>
 			<Row>
-				<span style={{textShadow: "0px 0px .5px rgba(90,90,90,.1)", fontSize: ".75rem", fontWeight: "bold"}}>
+				<span
+					style={{
+						textShadow: "0px 0px .5px rgba(90,90,90,.1)",
+						fontSize: ".75rem",
+						fontWeight: "bold",
+						...props.style,
+					}}>
 					{props.children}
 				</span>
 			</Row>
@@ -53,7 +63,12 @@ export const SectionText = (props: any) => {
 	return (
 		<Motioner style={{marginBottom: 5}}>
 			<Row>
-				<span style={{textShadow: "0px 0px .5px rgba(90,90,90,.1)", fontSize: ".9rem", fontWeight: "bold"}}>
+				<span
+					style={{
+						textShadow: "0px 0px .5px rgba(90,90,90,.1)",
+						fontSize: ".9rem",
+						color: theme.text_heavy,
+					}}>
 					{props.children}
 				</span>
 			</Row>
@@ -61,7 +76,13 @@ export const SectionText = (props: any) => {
 	)
 }
 
-export const HintText = (props: any) => {
+interface HintProps {
+	children: ReactNode
+	textStyle?: CSSProperties
+
+	motion?: MotionProps
+}
+export const HintText = (props: HintProps) => {
 	return (
 		<Motioner style={{marginBottom: 5}}>
 			<Row>
@@ -69,7 +90,9 @@ export const HintText = (props: any) => {
 					style={{
 						fontSize: ".7rem",
 						fontWeight: "normal",
+						textShadow: "0px 0px .8px rgba(100,100,100,.1)",
 						color: theme.text_extra_light,
+						...props.textStyle,
 					}}>
 					{props.children}
 				</span>
