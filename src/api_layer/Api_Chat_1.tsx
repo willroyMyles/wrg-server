@@ -5,7 +5,7 @@ import moment from "moment"
 import dotenv from "dotenv"
 
 export const sendMessage = (payload: any) => {
-	const url = "https://hooks.slack.com/services/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"
+	const url = "https://hooks.slack.com/services/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"
 	const botUserToken = "xoxb-1222383793408-1209761931043-CdSces0VvjyV53LMZWQSzCHq"
 	const feedbackId = "C016BEEPF52"
 	return new Promise((resolve, reject) => {
