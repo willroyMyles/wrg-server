@@ -88,7 +88,7 @@ export const Content_List_2 = (props: any) => {
 								style={{
 									width: "100%",
 									marginTop: 29,
-									// backgroundColor: "rgba(240,242,245,.2)",
+									backgroundColor: theme.text_white,
 									padding: 20,
 									borderRadius: 4,
 									// border: "1px solid rgba(100,100,100,.2)",

@@ -15,6 +15,7 @@ import Settings from "../account/Settings"
 import {theme} from "../../../Theme"
 import Content_View_Post from "./Content_View_Post"
 import Profile_View_Other from "../account/Profile_View_Other"
+import FeedBack from "./FeedBack"
 
 const Content_Holder = () => {
 	const bp = useBreakpoint()
@@ -64,6 +65,11 @@ const Content_Holder = () => {
 			setVisible(true)
 			setNode(<Profile_View_Other item={profile} />)
 		})
+
+		eventEmitter.on(eventStrings.showFeedback, () => {
+			setVisible(true)
+			setNode(<FeedBack />)
+		})
 	}, [])
 
 	return (
@@ -71,7 +77,7 @@ const Content_Holder = () => {
 			<Layout.Content style={{backgroundColor: theme.faint}}>
 				<Drawer
 					destroyOnClose
-					width={bp.xs ? "100%" : "78%"}
+					width={bp.xs ? "100%" : "38%"}
 					// drawerStyle={{backgroundColor: theme.faint}}
 					visible={visible}
 					onClose={() => setVisible(false)}>

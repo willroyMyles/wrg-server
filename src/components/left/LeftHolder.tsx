@@ -4,8 +4,9 @@ import Left_Top from "./Left_Top"
 import Left_Middle from "./Left_Middle"
 import Left_Bottom from "./Left_Bottom"
 import {theme} from "../../Theme"
-import {Row} from "antd"
+import {Row, Button} from "antd"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
+import eventEmitter, {eventStrings} from "../helpers/EventEmitters"
 
 const LeftHolder = () => {
 	const bp = useBreakpoint()
@@ -27,6 +28,9 @@ const LeftHolder = () => {
 			<Left_Middle />
 			<div />
 			<div />
+			<Button onClick={() => eventEmitter.emit(eventStrings.showFeedback)} type="primary">
+				feedback
+			</Button>
 			{/* <Left_Top /> */}
 		</Row>
 	)

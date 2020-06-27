@@ -19,4 +19,5 @@ export const eventStrings = {
 	list_mounted: "list mounted",
 	PostSelected: "post slected ",
 	showOtherProfile: " other profile",
+	showFeedback: "feedback",
 }
