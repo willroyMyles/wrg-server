@@ -8,9 +8,9 @@ module.exports = (app) => {
 		res.json("hi")
 	})
 
-	app.get("*", (req, res) => {
-		res.sendFile(path.join(__dirname + "/wrg/build/index.html"))
-	})
+	// app.get("*", (req, res) => {
+	// 	res.sendFile(path.join(__dirname + "/wrg/build/index.html"))
+	// })
 
 	console.log("started")
 }

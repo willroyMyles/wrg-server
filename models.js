@@ -1,19 +1,29 @@
 const mongoose = require("mongoose")
 
-const Posts = mongoose.model("posts", {
-	_id: Number,
-	userId: Number,
-	title: String,
-	body: String,
-	category: Number,
-	sub_category: Number,
-	make: String,
-	model: String,
-	year: Number,
-	time: {type: Date, default: Date.now},
+class Posts {
+	_id
+	userId
+	title
+	body
+	category
+	sub_category
+	make
+	model
+	year
+	time
 
-	replies: [],
-})
+	replies = []
+}
+
+class CategoryStatistics {
+	_id
+	sub
+	total
+	viewed
+	pending
+	filled
+	available
+}
 
 const Replies = mongoose.model("replies", {
 	_id: Number,
@@ -33,3 +43,4 @@ const User = mongoose.model("user", {
 module.exports.User = User
 module.exports.Posts = Posts
 module.exports.Replies = Replies
+module.exports.CategoryStatistics = CategoryStatistics
