@@ -25,52 +25,63 @@ export const ErrorLabel = (text: string | any) => {
 	)
 }
 
-export const Heading = (props: any) => {
+export const TextHeading = (props: any) => {
 	return (
 		<Motioner>
 			<Row>
-				<Title level={2} style={{textTransform: "capitalize"}}>
+				<Text
+					style={{
+						// textShadow: "0px 0px 3px rgba(0,0,0,.1)",
+						fontFamily: "Questrial",
+						fontWeight: "normal",
+						fontSize: "3rem",
+					}}>
 					{props.children}
-				</Title>
+				</Text>
 			</Row>
 		</Motioner>
 	)
 }
 
-interface SubHeadingProps {
+interface TextSubHeadingProps {
 	style?: CSSProperties
 	children: ReactNode
 }
-export const SubHeading = (props: SubHeadingProps) => {
+export const TextSubHeading = (props: TextSubHeadingProps) => {
 	return (
 		<Motioner style={{marginBottom: 5}}>
 			<Row>
-				<span
+				<Text
 					style={{
-						textShadow: "0px 0px .5px rgba(90,90,90,.1)",
-						fontSize: ".75rem",
-						fontWeight: "bold",
-						...props.style,
+						fontFamily: "Questrial",
+						fontWeight: "normal",
+						fontSize: "1.5rem",
+						textShadow: "0px 0px .1px rgba(0,0,0,.2)",
 					}}>
 					{props.children}
-				</span>
+				</Text>
 			</Row>
 		</Motioner>
 	)
 }
 
-export const SectionText = (props: any) => {
+export const TextSection = (props: any) => {
 	return (
 		<Motioner style={{marginBottom: 5}}>
 			<Row>
-				<span
-					style={{
-						textShadow: "0px 0px .5px rgba(90,90,90,.1)",
-						fontSize: ".9rem",
-						color: theme.text_heavy,
-					}}>
+				<Text style={{fontFamily: "Questrial", fontWeight: "bold", fontSize: "1rem", color: "rgba(0,0,10,.45)"}}>
 					{props.children}
-				</span>
+				</Text>
+			</Row>
+		</Motioner>
+	)
+}
+
+export const TextRegular = (props: any) => {
+	return (
+		<Motioner style={{marginBottom: 5}}>
+			<Row>
+				<Text style={{fontFamily: "Questrial", fontWeight: "normal", fontSize: ".9rem"}}>{props.children}</Text>
 			</Row>
 		</Motioner>
 	)
@@ -82,20 +93,19 @@ interface HintProps {
 
 	motion?: MotionProps
 }
-export const HintText = (props: HintProps) => {
+export const TextHint = (props: HintProps) => {
 	return (
 		<Motioner style={{marginBottom: 5}}>
 			<Row>
-				<span
+				<Text
 					style={{
-						fontSize: ".7rem",
-						fontWeight: "normal",
-						textShadow: "0px 0px .8px rgba(100,100,100,.1)",
-						color: theme.text_extra_light,
-						...props.textStyle,
+						fontFamily: "Roboto",
+						fontWeight: "bold",
+						fontSize: ".75rem",
+						color: "rgba(100,100,100,.5)",
 					}}>
 					{props.children}
-				</span>
+				</Text>
 			</Row>
 		</Motioner>
 	)
@@ -103,10 +113,11 @@ export const HintText = (props: HintProps) => {
 
 export const TextParaGraph = (props: ParagraphProps) => {
 	const syle: CSSProperties = {
-		color: theme.text_extra_light,
-		fontSize: ".9rem",
+		color: theme.text_light,
+		fontSize: "1rem",
 		textAlign: "left",
-		...props.style,
+		fontFamily: "Roboto",
+		// ...props.style,
 	}
 	return (
 		<Motioner>

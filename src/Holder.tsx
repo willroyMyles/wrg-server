@@ -1,16 +1,13 @@
-import React, {useState, ReactNode} from "react"
-import {Layout, Row, Button, Drawer, BackTop} from "antd"
+import React, {useState} from "react"
+import {Layout} from "antd"
 import Middle_Holder from "./components/middle/Middle_Holder"
 import LeftHolder from "./components/left/LeftHolder"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
-import eventEmitter, {eventStrings} from "./components/helpers/EventEmitters"
-import {motion, AnimatePresence} from "framer-motion"
-import Signup from "./components/middle/account/Signup"
 import Middle_Header from "./components/middle/Middle_Header"
 import {theme} from "./Theme"
 
 const Holder = () => {
-	const [minimized, setMinimized] = useState(false)
+	const [] = useState(false)
 	const breakPoint = useBreakpoint()
 
 	return (
@@ -26,9 +23,11 @@ const Holder = () => {
 					height: "100vh",
 					overflow: "scroll",
 					// paddingLeft:
-					padding: breakPoint.xs ? 3 : 35,
+					padding: 5,
+					paddingLeft: breakPoint.xs ? 3 : 35,
+					paddingRight: breakPoint.xs ? 3 : 35,
 					zIndex: 2,
-					backgroundColor: "transparent",
+					backgroundColor: theme.color,
 				}}>
 				{/* <Middle_Header /> */}
 				<Middle_Holder />

@@ -3,7 +3,7 @@ import {List, Row, Col, Tooltip, Button, BackTop, Divider} from "antd"
 import dataExchanger from "../../../data_layer/DataExchange"
 import Motioner from "../../helpers/Motioner"
 import {theme} from "../../../Theme"
-import {AAvatar, SubHeading, HintText, TextParaGraph} from "../../helpers/Helpers_Index"
+import {AAvatar, TextSubHeading, TextParaGraph, TextHint, TextSection, TextRegular} from "../../helpers/Helpers_Index"
 import moment from "moment"
 import {
 	BsThreeDotsVertical,
@@ -18,6 +18,9 @@ import {
 import Content_View_Post from "./Content_View_Post"
 import Text from "antd/lib/typography/Text"
 import dataProvider from "../../../data_layer/DataProvider"
+import logger from "../../helpers/Logger"
+import {useParams} from "react-router-dom"
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 
 export const Content_List_2 = (props: any) => {
 	const [morePost, setMorePost] = useState(true)
@@ -25,28 +28,36 @@ export const Content_List_2 = (props: any) => {
 	const [visible, setVisible] = useState(false)
 	const [loading, setLoading] = useState(false)
 	const [currentIndex, setCurrentIndex] = useState<number | null>(null)
+
+	const {id} = useParams()
+	const bp = useBreakpoint()
 	useEffect(() => {
+		getMorePosts()
 		setData(dataExchanger.postData)
+		console.log("called")
 	}, [])
 
 	useEffect(() => {
-		console.log(props)
-		filterData()
+		// console.log(props)
+		// filterData()
 	}, [props])
 
 	const filterData = () => {
 		setLoading(true)
-		const categoryNumber = Number.parseInt(props.cat)
+		const categoryNumber = Number.parseInt(id)
 		const subcategoryNumber = Number.parseInt(props.sub)
 		const category = dataProvider.headers[categoryNumber]
-		const subcategory = dataProvider.parts[categoryNumber][subcategoryNumber]
+		// const subcategory = dataProvider.parts[categoryNumber][subcategoryNumber]
 
-		setData(
-			dataExchanger.postData.filter((value, index) => {
-				return value.category == category
-			})
-		)
+		var d: any[] = []
+		dataExchanger.postData.forEach((value, key) => {
+			const stat = value.category == category
+			if (stat) d.push(value)
+		})
+		setData(d)
+
 		setLoading(false)
+		setCurrentIndex(-1)
 	}
 
 	const getMorePosts = () => {
@@ -68,31 +79,30 @@ export const Content_List_2 = (props: any) => {
 	}
 
 	return (
-		<Row style={{width: "100%"}}>
-			<BackTop>
-				<BsArrowUp />
-			</BackTop>
+		<Row id="row" style={{width: "100%", minHeight: "90vh"}}>
 			<List
-				style={{width: "100%"}}
+				style={{width: "100%", padding: bp.sm ? 0 : bp.xs ? 0 : 25}}
 				dataSource={data}
 				loading={loading}
-				footer={
-					<Text>
-						<BsFillHeartFill />
-					</Text>
-				}
+				grid={{column: 1, gutter: 30}}
 				renderItem={(item: any, index: number) => {
 					return (
-						<div>
+						<List.Item>
 							<Motioner
+								// motion={{
+								// 	whileHover: {
+								// 		boxShadow: ["15px 15px 2px rgba(100,100,100,.1)", "25px 25px 15px rgba(100,100,100,.07)"],
+								// 		scale: [1.0, 1.02],
+								// 	},
+								// }}
 								style={{
-									width: "100%",
+									width: bp.xs ? "100%" : "85%",
 									marginTop: 29,
 									backgroundColor: theme.text_white,
-									padding: 20,
-									borderRadius: 4,
-									// border: "1px solid rgba(100,100,100,.2)",
-									// boxShadow: "5px 5px 3px rgba(100,100,100,.05)",
+									padding: 25,
+									borderRadius: 7,
+									border: "1px solid rgba(200,200,200,.3)",
+									boxShadow: "5px 5px 8px rgba(100,100,100,.1)",
 								}}>
 								{currentIndex != index && (
 									<Row
@@ -115,22 +125,25 @@ export const Content_List_2 = (props: any) => {
 										</Col>
 										<Col span={20} offset={1}>
 											<Row align="middle" justify="space-between">
-												<Col>
-													<SubHeading>{item.username}</SubHeading>
-													<SubHeading>{item.title}</SubHeading>
-												</Col>
-												<Col>
-													<Row align="middle">
-														<HintText>{moment(item.time).fromNow()}</HintText>
-														<Tooltip title="more options">
-															<Button
-																type="text"
-																onClick={() => console.log("vertical")}
-																style={{border: "none"}}
-																icon={<BsThreeDotsVertical opacity={0.6} />}
-															/>
-														</Tooltip>
+												<Col span={24}>
+													<Row align="middle" justify="space-between">
+														<TextSection>{item.username}</TextSection>
+
+														<Col>
+															<Row align="middle">
+																<TextHint>{moment(item.time).fromNow()}</TextHint>
+																<Tooltip title="more options">
+																	<Button
+																		type="text"
+																		onClick={() => console.log("vertical")}
+																		style={{border: "none"}}
+																		icon={<BsThreeDotsVertical opacity={0.6} />}
+																	/>
+																</Tooltip>
+															</Row>
+														</Col>
 													</Row>
+													<TextSubHeading>{item.title}</TextSubHeading>
 												</Col>
 											</Row>
 											<Row style={{marginTop: 12, marginBottom: 5}}>
@@ -173,13 +186,10 @@ export const Content_List_2 = (props: any) => {
 															setVisible(true)
 															setCurrentIndex(index)
 														}}
-														// type="text"
-														style={{
-															boxShadow: "5px 5px 0px rgba(200,200,200,.0)",
-														}}>
-														<Row align="middle">
-															View Content {"  "} <BsArrowRight size={25} />
-														</Row>
+														type="primary">
+														{/* <Row align="middle" style={{textTransform: "capitalize", marginTop: 5}}> */}
+														View Content <BsArrowRight size={20} strokeWidth={1} opacity={0.65} />
+														{/* </Row> */}
 													</Button>
 												</Col>
 											</Row>
@@ -192,15 +202,21 @@ export const Content_List_2 = (props: any) => {
 									</Motioner>
 								)}
 							</Motioner>
-							<Divider style={{borderColor: theme.text_extra_light, opacity: 0.4}} />
-						</div>
+							<Divider style={{borderColor: theme.text_extra_light, opacity: 0.0}} />
+						</List.Item>
 					)
 				}}
 			/>
 			<Row justify="center" align="middle" style={{marginTop: 20, marginBottom: 30, width: "100%"}}>
 				<Col>{morePost && <Button onClick={() => getMorePosts()}>load more !</Button>}</Col>
-				<Col>{!morePost && <SubHeading>no more posts</SubHeading>}</Col>
+				<Col>{!morePost && <TextSubHeading>no more posts</TextSubHeading>}</Col>
 			</Row>
+			<Tooltip title="to top">
+				<BackTop>
+					<BsArrowUp color={"rgba(0,0,0,1)"} />
+					help
+				</BackTop>
+			</Tooltip>
 		</Row>
 	)
 }

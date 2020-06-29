@@ -1,10 +1,10 @@
 import React, {useState, createRef, useRef} from "react"
 import Motioner from "../../helpers/Motioner"
-import {Heading, TextParaGraph} from "../../helpers/Helpers_Index"
 import {Input, Row, Button, List, Col} from "antd"
 import {BsMusicNoteBeamed} from "react-icons/bs"
 import {observer} from "mobx-react"
 import chatManager from "../../../data_layer/ChatManager"
+import {TextHeading, TextParaGraph, TextHint} from "../../helpers/Helpers_Index"
 
 const FeedBack = observer(() => {
 	const [data, setData] = useState<any[]>([])
@@ -28,7 +28,7 @@ const FeedBack = observer(() => {
 	return (
 		<Motioner>
 			<Row justify="space-between" style={{flexDirection: "column"}}>
-				<Heading>Feedback</Heading>
+				<TextHeading>Feedback</TextHeading>
 				<Col flex="auto" style={{flexDirection: "column", flex: 1, height: "70vh"}}>
 					<List
 						header="Messages"
@@ -55,6 +55,9 @@ const FeedBack = observer(() => {
 							send
 						</Button>
 					</Col>
+				</Row>
+				<Row justify="center">
+					<TextHint>Your recent messages will disappear after this dialog is closed</TextHint>
 				</Row>
 			</Row>
 		</Motioner>

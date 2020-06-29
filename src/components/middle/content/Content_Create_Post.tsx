@@ -8,7 +8,7 @@ import Text from "antd/lib/typography/Text"
 import {Winput} from "../../helpers/Styled"
 import {BsAlarm} from "react-icons/bs"
 import TextArea from "antd/lib/input/TextArea"
-import {ErrorLabel, Heading} from "../../helpers/Helpers_Index"
+import {ErrorLabel, TextHeading} from "../../helpers/Helpers_Index"
 import dataExchanger from "../../../data_layer/DataExchange"
 import {observer} from "mobx-react"
 import Motioner from "../../helpers/Motioner"
@@ -87,7 +87,7 @@ const Content_Create_Post = observer(() => {
 
 	return (
 		<Motioner style={{background: theme.faint}}>
-			<Heading>Create Post</Heading>
+			<TextHeading>Create Post</TextHeading>
 			<Row justify="center" style={{}}>
 				<form
 					id="createForm"

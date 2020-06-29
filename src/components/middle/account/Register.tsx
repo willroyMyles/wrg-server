@@ -1,11 +1,12 @@
 import React, {useState} from "react"
 import {motion} from "framer-motion"
 import {motionValues, ErrorLabel} from "../../helpers/Helpers_Index"
-import {Row, Input, Col, Button} from "antd"
+import {Row, Input, Col, Button, message} from "antd"
 import {Controller, useForm} from "react-hook-form"
 import dataExchanger from "../../../data_layer/DataExchange"
 import {observer} from "mobx-react"
 import Motioner from "../../helpers/Motioner"
+import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
 
 interface FormPropsL {
 	email: string
@@ -19,7 +20,14 @@ const Register = observer(() => {
 	const {errors, control, handleSubmit} = useForm<FormPropsL>()
 
 	const submit = (data: FormPropsL) => {
-		dataExchanger.register(data)
+		dataExchanger.register(data).then((res) => {
+			if (res) {
+				message.success("Registered successfully")
+				eventEmitter.emit(eventStrings.showDrawer, false)
+			} else {
+				message.error("Did not register successfully")
+			}
+		})
 	}
 
 	return (
@@ -33,7 +41,7 @@ const Register = observer(() => {
 							control={control}
 							rules={{required: "user name required"}}
 							name="username"
-							defaultValue={"wm"}
+							// defaultValue={"wm"}
 						/>
 						{errors.username && <ErrorLabel text={errors.username.message?.toString()} />}
 					</Row>
@@ -44,7 +52,7 @@ const Register = observer(() => {
 							control={control}
 							rules={{required: "email required"}}
 							name="email"
-							defaultValue="wm@myles.com"
+							// defaultValue="wm@myles.com"
 						/>
 						{errors.email && <ErrorLabel text={errors.email.message?.toString()} />}
 					</Row>
@@ -55,7 +63,7 @@ const Register = observer(() => {
 							control={control}
 							rules={{required: "password required"}}
 							name="password"
-							defaultValue="4"
+							// defaultValue="4"
 						/>
 						{errors.password && <ErrorLabel text={errors.password.message?.toString()} />}
 					</Row>
@@ -66,7 +74,7 @@ const Register = observer(() => {
 							control={control}
 							rules={{required: "required to confirm password"}}
 							name="password2"
-							defaultValue="4"
+							// defaultValue="4"
 						/>
 						{errors.password2 && <ErrorLabel text={errors.password2.message?.toString()} />}
 					</Row>

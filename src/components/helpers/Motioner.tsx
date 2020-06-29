@@ -1,5 +1,5 @@
 import React, {ReactNode, Component} from "react"
-import {motion, AnimatePresence, MotionProps} from "framer-motion"
+import {motion, AnimatePresence, MotionProps, MotionValue} from "framer-motion"
 import {motionValues} from "./Helpers_Index"
 import {CSSProperties} from "styled-components"
 
@@ -8,20 +8,9 @@ interface Props {
 	style?: CSSProperties
 
 	motion?: MotionProps
+
+	motionValue?: any
 }
-// const Motioner = (props: Props) => {
-// 	const val = motionValues.none
-// 	return (
-// 		<motion.div
-// 			transition={motionValues.transition}
-// 			style={{...props.style}}
-// 			initial={val}
-// 			animate={motionValues.in}
-// 			exit={val}>
-// 			{props.children}
-// 		</motion.div>
-// 	)
-// }
 
 class Motioner extends Component<Props> {
 	state = {
@@ -31,11 +20,13 @@ class Motioner extends Component<Props> {
 		this.setState({visible: false})
 	}
 	render() {
-		const val = motionValues.Fade
+		const val = this.props.motionValue ? this.props.motionValue : motionValues.Fade
 		return (
 			<AnimatePresence exitBeforeEnter>
 				{this.state.visible && (
 					<motion.div
+						whileHover={this.props.motion?.whileHover}
+						whileTap={this.props.motion?.whileTap}
 						transition={motionValues.transition}
 						style={{...this.props.style}}
 						initial={val}

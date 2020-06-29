@@ -1,39 +1,26 @@
 import React, {useState, useEffect} from "react"
 import {Row, Tooltip, notification, Button, Col} from "antd"
-import {
-	BsHouse,
-	BsBoxArrowInRight,
-	BsBoxArrowInLeft,
-	BsBoxArrowRight,
-	BsBoxArrowLeft,
-	BsSearch,
-	BsPerson,
-	BsGear,
-} from "react-icons/bs"
+import {BsPerson} from "react-icons/bs"
 import eventEmitter, {eventStrings} from "../helpers/EventEmitters"
-import Signup from "../middle/account/Signup"
 import {observer} from "mobx-react"
 import dataExchanger from "../../data_layer/DataExchange"
-import dataProvider from "../../data_layer/DataProvider"
 import Text from "antd/lib/typography/Text"
 import {theme} from "../../Theme"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import Motioner from "../helpers/Motioner"
-import {Winput} from "../helpers/Styled"
-import {SubHeading, SectionText} from "../helpers/Helpers_Index"
 import {Avatar} from "evergreen-ui"
 
 const Left_Bottom = observer(() => {
 	const [trigger, setTrigger] = useState(false)
 	const bp = useBreakpoint()
 
-	const [name, setname] = useState("")
+	const [, setname] = useState("")
 
 	useEffect(() => {
 		setname(dataExchanger.username)
 		const arr = dataExchanger.username.split(" ")
 
-		arr.forEach((value, index) => {
+		arr.forEach((value) => {
 			setname((previous) => previous + value.slice(0, 1))
 		})
 	}, [dataExchanger.username])
@@ -50,8 +37,8 @@ const Left_Bottom = observer(() => {
 						<Button
 							style={{border: "none", marginBottom: 20}}
 							onClick={() => {
-								eventEmitter.emit(eventStrings.showDrawer)
-								eventEmitter.emit(eventStrings.shouldSetNode, <Signup />)
+								eventEmitter.emit(eventStrings.login)
+								// eventEmitter.emit(eventStrings.shouldSetNode, <Signup />)
 							}}
 							type="text"
 							icon={<BsPerson size={30} />}

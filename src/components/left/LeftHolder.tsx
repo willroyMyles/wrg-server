@@ -1,6 +1,5 @@
 import React from "react"
-import PropTypes from "prop-types"
-import Left_Top from "./Left_Top"
+
 import Left_Middle from "./Left_Middle"
 import Left_Bottom from "./Left_Bottom"
 import {theme} from "../../Theme"
@@ -9,7 +8,6 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import eventEmitter, {eventStrings} from "../helpers/EventEmitters"
 
 const LeftHolder = () => {
-	const bp = useBreakpoint()
 	return (
 		<Row
 			// align="middle"

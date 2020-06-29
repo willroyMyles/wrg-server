@@ -2,7 +2,7 @@ import {blue, green, generate, grey} from "@ant-design/colors"
 import {CSSProp, CSSProperties} from "styled-components"
 import less from "less"
 
-const col = generate("#0a4", {
+const col = generate("rgba(170,214,189,1)", {
 	theme: "default",
 	// backgroundColor: "#000",
 })
@@ -28,6 +28,7 @@ export const theme = {
 	text_medium: grey[6],
 	text_heavy: grey[9],
 	text_white: textWhite,
+	color: "rgba(251,251,251,1)",
 }
 const Theme = theme
 export default Theme

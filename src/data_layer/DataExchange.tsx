@@ -31,13 +31,13 @@ class Store {
 
 	@observable username = localStorage.getItem(localStorageStrings.user_name) || ""
 
-	@observable postData: Array<any> = []
+	@observable postData: Map<string, any> = new Map()
 	@observable postOffset = 0
 
 	@observable postLimit = 5
 	@observable statictics: Map<number, any> = new Map()
 	@observable currentOtherProfile: any = ""
-	@observable listOfReplies: Map<string, any> = new Map()
+	@observable listOfReplies: Map<string, any[]> = new Map()
 
 	@action sendCreatePostData = (data: any) => {
 		data.make = data.make_model[0]
@@ -48,7 +48,8 @@ class Store {
 		return new Promise((resolve) => {
 			sendCreatePost(data)
 				.then((res) => {
-					this.postData.push(this.format(data))
+					// this.postData.push(this.format(data))
+					this.getPosts()
 					if (res) resolve(true)
 				})
 				.catch((err) => {
@@ -59,27 +60,42 @@ class Store {
 
 	@action sendReply = (value: string, postId: string) => {
 		return new Promise((resolve) => {
-			sendReply(value, postId)
+			sendReply(value, postId, this.username)
 				.then((res) => {
+					// resolve(this.updatePost(postId, value))
+					this.updatePost(postId, value).then((res) => {
+						resolve(getReplies(postId))
+					})
+					// accept an updated post
 					console.log(res)
-					resolve(true)
 				})
 				.catch((err) => resolve(false))
 		})
 	}
 
-	@action getReplies = (ids: Array<string>) => {
-		return new Promise((resolve) => {
-			if (this.listOfReplies.has(ids[0])) {
-				resolve(true)
-				return
-			}
+	updatePost = (postId: string, reply: string) =>
+		new Promise((resolve) => {
+			const posts = this.postData.get(postId) // array of ids
+			posts?.replies.push(reply)
+			this.postData.set(postId, posts || [])
+			// this.listOfReplies.set(postId, posts.replies)
+			resolve(true)
+		})
 
-			getReplies(ids)
+	@action getReplies = (postId: string) => {
+		return new Promise((resolve) => {
+			// if (this.listOfReplies.has(ids[0])) {
+			// 	resolve(true)
+			// 	return
+			// }
+
+			getReplies(postId)
 				.then((res: any) => {
+					var d: any[] = []
 					res.forEach((element: {_id: string; body: any}) => {
-						this.listOfReplies.set(element._id, element)
+						d.push(element)
 					})
+					this.listOfReplies.set(postId, d)
 
 					resolve(true)
 				})
@@ -108,8 +124,9 @@ class Store {
 					if (res.length != 0) this.postOffset += this.postLimit
 					res.forEach((element: any) => {
 						element = this.format(element)
+						this.postData.set(element._id, element)
 					})
-					this.postData = this.postData.concat(res)
+					// this.postData = this.postData.concat(res)
 					if (res.length == 0) resolve(100)
 					resolve(true)
 				})
@@ -128,7 +145,6 @@ class Store {
 					if (res.data) {
 						this.username = this.tempUsername
 						this.userId = res.data.insertedId
-						this.loggedInString = "yes"
 
 						if (res) resolve(true)
 					} else resolve(false)
@@ -159,17 +175,20 @@ class Store {
 	@observable isLoggedIn = () => this.userId != ""
 
 	@action getStatictics = () => {
+		eventEmitter.emit(eventStrings.updatingStatistics, true)
 		return new Promise((resolve, reject) => {
 			getStatictics()
 				.then((res: any) => {
 					res.forEach((element: any) => {
 						this.statictics.set(Number.parseInt(element._id), element)
 					})
+					eventEmitter.emit(eventStrings.updatingStatistics, false)
 
 					resolve(true)
 				})
 				.catch((err) => {
 					resolve(false)
+					eventEmitter.emit(eventStrings.updatingStatistics, false)
 				})
 		})
 	}

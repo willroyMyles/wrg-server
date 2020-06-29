@@ -1,7 +1,6 @@
 import React, {useState, useEffect, ReactNode} from "react"
 import Motioner from "../../helpers/Motioner"
 import {Popconfirm, Row, Button, Col, Card} from "antd"
-import {SubHeading, Heading, SectionText, HintText} from "../../helpers/Helpers_Index"
 import {Avatar} from "evergreen-ui"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
 import Text from "antd/lib/typography/Text"
@@ -9,6 +8,7 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import {observer} from "mobx-react"
 import dataExchanger from "../../../data_layer/DataExchange"
 import {CSSProperties} from "styled-components"
+import {TextHeading, TextSection, TextHint} from "../../helpers/Helpers_Index"
 
 const Profile_View_Other = observer(({item}: {item: any}) => {
 	const bp = useBreakpoint()
@@ -31,14 +31,14 @@ const Profile_View_Other = observer(({item}: {item: any}) => {
 	return (
 		<Motioner style={{width: "100%"}}>
 			<Row style={{marginTop: 35}}>
-				<Heading>Profile</Heading>
+				<TextHeading>Profile</TextHeading>
 			</Row>
 			<Card loading={loading}>
 				<Row align="middle" justify="center">
 					<Avatar size={55} name={item.username} />
 				</Row>
 				<Row style={{margin: 15}} align="middle" justify="center">
-					<SectionText>{item.username}</SectionText>
+					<TextSection>{item.username}</TextSection>
 				</Row>
 				<Row align="middle" justify="space-around">
 					<Button type="primary" disabled>
@@ -78,7 +78,7 @@ export const DescText = ({
 	return (
 		<Motioner>
 			<Row justify="center">
-				<HintText textStyle={{textTransform: "capitalize"}}>{title}</HintText>
+				<TextHint textStyle={{textTransform: "capitalize"}}>{title}</TextHint>
 			</Row>
 			<Row justify="center">
 				<Text style={{fontWeight: "bold", opacity: 0.7}}>{value}</Text>

@@ -103,9 +103,9 @@ export const getUserData = (userId: string) => {
 	})
 }
 
-export const sendReply = (reply: string, postId: string) =>
+export const sendReply = (reply: string, postId: string, username: string) =>
 	new Promise((resolve, reject) => {
-		const data = {reply: reply, id: postId}
+		const data = {reply: reply, id: postId, username: username}
 		axios
 			.post(url + "reply", stringify(data))
 			.then((res) => {
@@ -116,12 +116,12 @@ export const sendReply = (reply: string, postId: string) =>
 			.catch((err) => reject(err))
 	})
 
-export const getReplies = (replyIds: Array<string>) => {
-	console.log(replyIds)
+export const getReplies = (postId: string) => {
+	// console.log(replyIds)
 
 	const headers: AxiosRequestConfig = {
 		headers: {
-			ids: JSON.stringify(replyIds),
+			postId: postId,
 		},
 	}
 	return new Promise((resolve, reject) => {

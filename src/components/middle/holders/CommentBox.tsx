@@ -1,85 +1,100 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, Component} from "react"
 import Motioner from "../../helpers/Motioner"
-import {Row, Empty, Spin, message, Col} from "antd"
-import {SubHeading, AAvatar, motionValues} from "../../helpers/Helpers_Index"
+import {Row, Empty, Spin, message, Col, List} from "antd"
+import {AAvatar, motionValues, TextSubHeading, TextHint, TextParaGraph} from "../../helpers/Helpers_Index"
 import dataExchanger from "../../../data_layer/DataExchange"
-import {Avatar} from "evergreen-ui"
 import Paragraph from "antd/lib/typography/Paragraph"
 import {motion, AnimatePresence} from "framer-motion"
 import Text from "antd/lib/typography/Text"
+import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
+import {Avatar} from "evergreen-ui"
 
-const CommentBox = ({replies}: {replies: Array<string>}) => {
-	const [loading, setLoading] = useState(true)
-	const [hovering, setHovering] = useState(false)
-	const [data, setdata] = useState<any[]>()
+class CommentBox extends Component<{postId: string; replies: any[]}> {
+	state = {
+		loading: false,
+		hovering: false,
+		data: [],
+	}
 
-	useEffect(() => {
-		dataExchanger.getReplies(replies).then((res) => {
-			setLoading(false)
+	postId: string
+	replies: any[]
+
+	constructor(props: Readonly<{postId: string; replies: any[]}>) {
+		super(props)
+
+		this.postId = props.postId
+		this.replies = props.replies
+	}
+
+	componentDidMount() {
+		this.update()
+		eventEmitter.addListener(eventStrings.replyCreated, () => {
+			this.update()
+		})
+	}
+
+	update = () => {
+		dataExchanger.getReplies(this.postId).then((res: any) => {
+			this.setState({loading: true})
 			if (res) {
-				const d: any[] = []
-				replies.forEach((value, index) => {
-					const val = dataExchanger.listOfReplies.get(value)
-					d.push(val)
-				})
-				setdata(d)
+				this.setState({data: dataExchanger.listOfReplies.get(this.postId)})
 			} else {
 				message.error("could not get replies...")
 			}
+			this.setState({loading: false})
 		})
-	}, [])
-	return (
-		<Motioner style={{width: "100%", marginTop: 20}}>
-			<Spin spinning={loading} delay={250}>
-				{replies.length == 0 && (
+	}
+
+	render() {
+		console.log("rendering")
+		return (
+			<Motioner style={{width: "100%", marginTop: 20}}>
+				{this.state.data.length == 0 && (
 					<Row>
 						<Empty
 							style={{width: "100%"}}
 							description={
 								<Row justify="center">
-									<SubHeading>No comments as yet...</SubHeading>
+									<TextSubHeading>No comments as yet...</TextSubHeading>
 								</Row>
 							}
 						/>
 					</Row>
 				)}
-				{replies.length != 0 && (
-					<Row>
-						<SubHeading>Gonna show data, i promise</SubHeading>
-						{data?.map((value, index) => {
-							return (
-								<AnimatePresence exitBeforeEnter>
-									<Motioner style={{width: "100%"}}>
-										<Row>
-											<Col span={3} onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
-												<AAvatar item={{}} props={{size: 20}} />
-											</Col>
-											<Col span={21}>
+				{this.state.data.length != 0 && (
+					<div>
+						<Row>
+							<TextHint>comments</TextHint>
+						</Row>
+						<Row style={{marginTop: 10}}>
+							<List
+								dataSource={this.state.data}
+								loading={this.state.loading}
+								renderItem={(item: any, index) => {
+									// console.log(index, item)
+
+									return (
+										<List.Item key={index}>
+											<Motioner>
 												<Row>
-													{hovering && (
-														<motion.div
-															style={{width: "100%", color: "black"}}
-															initial={motionValues.Scale_x}
-															animate={motionValues.in}
-															exit={motionValues.Scale_x}>
-															<Text>name and time to go here</Text>
-														</motion.div>
-													)}
+													<Col>
+														<Avatar name={item.username} />
+													</Col>
+													<Col>
+														<TextParaGraph>{item.body}</TextParaGraph>
+													</Col>
 												</Row>
-												<Row>
-													<Paragraph>{value.body}</Paragraph>
-												</Row>
-											</Col>
-										</Row>
-									</Motioner>
-								</AnimatePresence>
-							)
-						})}
-					</Row>
+											</Motioner>
+										</List.Item>
+									)
+								}}
+							/>
+						</Row>
+					</div>
 				)}
-			</Spin>
-		</Motioner>
-	)
+			</Motioner>
+		)
+	}
 }
 
 export default CommentBox

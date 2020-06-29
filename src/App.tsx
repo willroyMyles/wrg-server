@@ -1,17 +1,20 @@
-import React, {StyleHTMLAttributes, CSSProperties, useState} from "react"
-import logo from "./logo.svg"
+import React from "react"
 import "./App.less"
 import "./style.less"
 import "bootstrap/dist/css/bootstrap.css"
-// import "antd/dist/antd.less"
-// import "antd/dist/antd.css"
-import Holder from "./Holder"
-import {ThemeProvider, StyledComponentProps} from "styled-components"
-import {theme} from "./Theme"
-import {Col, Row, Divider, Drawer} from "antd"
-import eventEmitter, {eventStrings} from "./components/helpers/EventEmitters"
 
+import {ThemeProvider} from "styled-components"
+import {theme} from "./Theme"
+import {Row} from "antd"
+import WebFont from "webfontloader"
+import Holder from "./Holder"
 function App() {
+	WebFont.load({
+		google: {
+			families: ["Titillium", "Montserrat", "Roboto", "Dosis", "Questrial", "sans-serif"],
+		},
+	})
+
 	return (
 		<ThemeProvider theme={theme}>
 			<div className="App">

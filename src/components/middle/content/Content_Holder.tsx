@@ -16,6 +16,7 @@ import {theme} from "../../../Theme"
 import Content_View_Post from "./Content_View_Post"
 import Profile_View_Other from "../account/Profile_View_Other"
 import FeedBack from "./FeedBack"
+import Content_Page2 from "./Content_Page2"
 
 const Content_Holder = () => {
 	const bp = useBreakpoint()
@@ -70,11 +71,20 @@ const Content_Holder = () => {
 			setVisible(true)
 			setNode(<FeedBack />)
 		})
+
+		eventEmitter.on(eventStrings.login, () => {
+			setVisible(true)
+			setNode(<Signup />)
+		})
 	}, [])
 
 	return (
 		<Layout id="holder">
-			<Layout.Content style={{backgroundColor: theme.faint}}>
+			<Layout.Content
+				style={{
+					backgroundColor: theme.color,
+					width: "100%",
+				}}>
 				<Drawer
 					destroyOnClose
 					width={bp.xs ? "100%" : "38%"}
@@ -88,8 +98,8 @@ const Content_Holder = () => {
 					<Switch>
 						<Route path="/" exact component={Content_Home} />
 						<Route path="/home" component={Content_Home} />
-						<Route path="/category/:id/:sub" component={Content_Page} />
-						<Route path="/category/:id" component={Content_Page} />
+						<Route path="/category/:id/:sub" component={Content_Page2} />
+						<Route path="/category/:id" component={Content_Page2} />
 						<Route path="/category" component={Content_Category} />
 						<Route path="/create-post" component={Content_Create_Post} />
 						<Route path="/settings" component={Settings} />

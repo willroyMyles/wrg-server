@@ -20,4 +20,6 @@ export const eventStrings = {
 	PostSelected: "post slected ",
 	showOtherProfile: " other profile",
 	showFeedback: "feedback",
+	updatingStatistics: "some update",
+	replyCreated: "reply created",
 }

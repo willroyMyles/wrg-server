@@ -5,6 +5,7 @@ import {ErrorLabel, motionValues} from "../../helpers/Helpers_Index"
 import {motion} from "framer-motion"
 import dataExchanger from "../../../data_layer/DataExchange"
 import Motioner from "../../helpers/Motioner"
+import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
 interface FormPropsL {
 	email: string
 	password: string
@@ -20,6 +21,7 @@ const Login = () => {
 			setLoading(false)
 			if (res) {
 				message.success("logged in!")
+				eventEmitter.emit(eventStrings.showDrawer, false)
 			} else {
 				message.error("something went wr0ng")
 			}
