@@ -20,17 +20,17 @@ module.exports = async (app) => {
 	const ReplyCollection = client.db(process.env.DATABASE_NAME).collection("replies")
 	const CatCollection = client.db(process.env.DATABASE_NAME).collection("category_statistics")
 
-	app.use(
-		session({
-			secret: process.env.SECRET,
-			resave: false,
-			saveUninitialized: false,
-			cookie: {
-				httpOnly: false,
-			},
-			store: new mongoStore({mongooseConnection: mongoose.connection}),
-		})
-	)
+	// app.use(
+	// 	session({
+	// 		secret: process.env.SECRET,
+	// 		resave: false,
+	// 		saveUninitialized: false,
+	// 		cookie: {
+	// 			httpOnly: false,
+	// 		},
+	// 		store: new mongoStore({mongooseConnection: mongoose.connection}),
+	// 	})
+	// )
 	app.use(passport.initialize())
 	app.use(passport.session())
 
@@ -123,45 +123,57 @@ module.exports = async (app) => {
 		post.replies = []
 		post.year = req.body.year
 		post.userId = req.body.userId
-		var arr = await UserCollection.find({_id: post.userId}).toArray()
+		var arr = await UserCollection.find({_id: post.userId})
+			.toArray()
+			.catch((err) => {
+				res.json("no user")
+			})
 		post.username = arr[0].username
 
 		PostCollection.insertOne(post).then((results) => {
 			console.log(results)
 			UserCollection.findOneAndUpdate({_id: post.userId}, {$push: {posts: results.insertedId}})
-			res.json(results)
+			res.json(post)
 		})
 
 		updateCategoryCollection(req.body.category)
 	})
 
 	app.post("/api/reply", (req, res) => {
-		const {reply, id} = req.body
+		const {reply, id, username} = req.body
 
 		var rep = {}
 		rep._id = uuid()
 		rep.body = reply
 		rep.postId = id
+		rep.username = username
+		rep.date = new Date()
 
 		ReplyCollection.insertOne(rep).then((result) => {
-			PostCollection.findOneAndUpdate({_id: id}, {$push: {replies: rep._id}})
+			PostCollection.findOneAndUpdate({_id: id}, {$push: {replies: rep._id}}).then((postResult) => {
+				console.log(postResult)
+			})
 			res.json(true)
 			return
 		})
 	})
 
-	app.get("/api/reply", (request, response) => {
-		const ids = JSON.parse(request.headers.ids)
+	app.get("/api/reply", async (request, response) => {
+		console.log(request.headers)
+
+		const ids = request.headers.postid
 		console.log(ids)
 		// console.log(...ids)
 		// console.log([...ids])
 
-		ReplyCollection.find({_id: {$in: ids}})
-			.toArray()
-			.then((res) => {
-				console.log(res)
-				response.json(res)
-			})
+		PostCollection.findOne({_id: ids}).then((res) => {
+			ReplyCollection.find({_id: {$in: res.replies}})
+				.toArray()
+				.then((res) => {
+					console.log(res)
+					response.json(res)
+				})
+		})
 	})
 
 	const updateCategoryCollection = (category, operand) => {
@@ -172,10 +184,11 @@ module.exports = async (app) => {
 				col.total = 1
 				col.available = 1
 				col.filled = 0
-				col.pending = 1
+				col.pending = 0
 				col.viewed = 0
 			} else {
 				col.total = res[0].total + 1
+				col.available = res[0].available + 1
 			}
 
 			if (res.length != 0) {
