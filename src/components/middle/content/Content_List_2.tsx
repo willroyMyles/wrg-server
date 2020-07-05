@@ -3,61 +3,53 @@ import {List, Row, Col, Tooltip, Button, BackTop, Divider} from "antd"
 import dataExchanger from "../../../data_layer/DataExchange"
 import Motioner from "../../helpers/Motioner"
 import {theme} from "../../../Theme"
-import {AAvatar, TextSubHeading, TextParaGraph, TextHint, TextSection, TextRegular} from "../../helpers/Helpers_Index"
+import {AAvatar, TextSubHeading, TextParaGraph, TextHint, TextSection} from "../../helpers/Helpers_Index"
 import moment from "moment"
-import {
-	BsThreeDotsVertical,
-	BsChat,
-	BsEye,
-	BsPaperclip,
-	BsArrowRight,
-	BsArrowUp,
-	BsHeart,
-	BsFillHeartFill,
-} from "react-icons/bs"
+import {BsThreeDotsVertical, BsChat, BsEye, BsPaperclip, BsArrowRight, BsArrowUp} from "react-icons/bs"
 import Content_View_Post from "./Content_View_Post"
 import Text from "antd/lib/typography/Text"
 import dataProvider from "../../../data_layer/DataProvider"
-import logger from "../../helpers/Logger"
 import {useParams} from "react-router-dom"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
+import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
 
 export const Content_List_2 = (props: any) => {
 	const [morePost, setMorePost] = useState(true)
 	const [data, setData] = useState<any>([])
 	const [visible, setVisible] = useState(false)
 	const [loading, setLoading] = useState(false)
-	const [currentIndex, setCurrentIndex] = useState<number | null>(null)
+	const [currentIndex, setCurrentIndex] = useState<number | null>(-1)
 
 	const {id} = useParams()
 	const bp = useBreakpoint()
 	useEffect(() => {
 		getMorePosts()
-		setData(dataExchanger.postData)
-		console.log("called")
-	}, [])
+		filterData()
 
-	useEffect(() => {
-		// console.log(props)
-		// filterData()
-	}, [props])
+		eventEmitter.addListener(eventStrings.postDataAltered, () => {
+			filterData()
+		})
+
+		return () => {
+			eventEmitter.removeListener(eventStrings.postDataAltered, () => null)
+		}
+
+		// console.log("called")
+	}, [])
 
 	const filterData = () => {
 		setLoading(true)
 		const categoryNumber = Number.parseInt(id)
-		const subcategoryNumber = Number.parseInt(props.sub)
 		const category = dataProvider.headers[categoryNumber]
-		// const subcategory = dataProvider.parts[categoryNumber][subcategoryNumber]
 
 		var d: any[] = []
-		dataExchanger.postData.forEach((value, key) => {
+		dataExchanger.postData.forEach((value) => {
 			const stat = value.category == category
 			if (stat) d.push(value)
 		})
 		setData(d)
 
 		setLoading(false)
-		setCurrentIndex(-1)
 	}
 
 	const getMorePosts = () => {
@@ -70,7 +62,6 @@ export const Content_List_2 = (props: any) => {
 					setMorePost(false)
 					return
 				}
-				// setData(dataExchanger.postData)
 				filterData()
 			} else {
 				setLoading(false)
@@ -89,12 +80,6 @@ export const Content_List_2 = (props: any) => {
 					return (
 						<List.Item>
 							<Motioner
-								// motion={{
-								// 	whileHover: {
-								// 		boxShadow: ["15px 15px 2px rgba(100,100,100,.1)", "25px 25px 15px rgba(100,100,100,.07)"],
-								// 		scale: [1.0, 1.02],
-								// 	},
-								// }}
 								style={{
 									width: bp.xs ? "100%" : "85%",
 									marginTop: 29,
@@ -159,7 +144,7 @@ export const Content_List_2 = (props: any) => {
 													</Tooltip>
 												</Col>
 												<Col>
-													<Tooltip title={`${item.replies.length} views`}>
+													<Tooltip title={` views`}>
 														<Row align="middle" style={{opacity: 0.6}}>
 															<Text>0 </Text>
 															<BsEye strokeWidth={0.3} style={{marginLeft: 7}} size={16} />
@@ -167,7 +152,7 @@ export const Content_List_2 = (props: any) => {
 													</Tooltip>
 												</Col>
 												<Col>
-													<Tooltip title={`${item.replies.length} attatchments`}>
+													<Tooltip title={`attatchments`}>
 														<Row align="middle" style={{opacity: 0.6}}>
 															<Text>0 </Text>
 															<BsPaperclip

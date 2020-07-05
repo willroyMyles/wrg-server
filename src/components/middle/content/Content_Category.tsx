@@ -1,19 +1,15 @@
 import React, {useState, useEffect} from "react"
-import {Row, Col, Descriptions, Drawer, List, Spin} from "antd"
+import {Row, Col, List, Spin} from "antd"
 import {observer} from "mobx-react"
 import dataProvider from "../../../data_layer/DataProvider"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
-import randomcolor from "randomcolor"
 import dataExchanger from "../../../data_layer/DataExchange"
 import Motioner from "../../helpers/Motioner"
-import DescriptionsItem from "antd/lib/descriptions/Item"
-import Title from "antd/lib/typography/Title"
 import {theme} from "../../../Theme"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import {DescText} from "../account/Profile_View_Other"
 import {TextHeading, TextSection} from "../../helpers/Helpers_Index"
 const Content_Category = observer(() => {
-	const bp = useBreakpoint()
 	const [data, setData] = useState(dataExchanger.statictics)
 	const [loading, setLoading] = useState(false)
 

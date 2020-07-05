@@ -11,7 +11,7 @@ const Holder = () => {
 	const breakPoint = useBreakpoint()
 
 	return (
-		<Layout style={{border: "0px solid black", padding: 0}}>
+		<Layout className="Container" style={{border: "0px solid black", padding: 0}}>
 			<Layout.Sider
 				style={{backgroundColor: "transparent", overflow: "hidden"}}
 				collapsedWidth={70}

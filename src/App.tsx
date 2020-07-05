@@ -8,6 +8,7 @@ import {theme} from "./Theme"
 import {Row} from "antd"
 import WebFont from "webfontloader"
 import Holder from "./Holder"
+import {Container} from "react-bootstrap"
 function App() {
 	WebFont.load({
 		google: {
@@ -17,11 +18,11 @@ function App() {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<div className="App">
+			<div className="App " style={{backgroundColor: "rgba(240,242,245, 1)"}}>
 				<Row justify="center">
-					{/* <Col style={{border: "0px solid black"}} xl={24} xxl={20}> */}
-					<Holder />
-					{/* </Col> */}
+					<Container>
+						<Holder />
+					</Container>
 				</Row>
 			</div>
 		</ThemeProvider>

@@ -2,27 +2,24 @@ import React, {useState, useEffect} from "react"
 import {useParams} from "react-router-dom"
 import dataProvider from "../../../data_layer/DataProvider"
 import Motioner from "../../helpers/Motioner"
-import {TextHeading, TextHint, TextSubHeading} from "../../helpers/Helpers_Index"
-import {Button, Row, Tabs, Affix, Col, Popover, Tooltip, BackTop} from "antd"
+import {TextHeading, TextHint} from "../../helpers/Helpers_Index"
+import {Button, Row, Affix, Col, Popover} from "antd"
 import {observer} from "mobx-react"
-import {TabNavigation, Tab} from "evergreen-ui"
 import TagGroup from "../../helpers/TagGroup"
-import dataExchanger from "../../../data_layer/DataExchange"
 import Content_List_2 from "./Content_List_2"
-import {theme} from "../../../Theme"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
-import {BsArrowUp, BsSliders, BsSlashCircle, BsTools} from "react-icons/bs"
+import {BsTools} from "react-icons/bs"
 
 const Content_Page2 = observer(() => {
 	const {id, sub} = useParams()
 
 	const [category, setcategory] = useState("")
-	const [subcategory, setsubcategory] = useState("")
+	const [, setsubcategory] = useState("")
 
 	const [categoryNum, setcategoryNum] = useState<number>(-1)
 	const [subcategoryNum, setsubcategoryNum] = useState<number>(-1)
 
-	const [affixed, setAffixed] = useState(false)
+	const [, setAffixed] = useState(false)
 
 	useEffect(() => {
 		if (id != undefined) setcategoryNum(Number.parseInt(id))
@@ -89,7 +86,7 @@ const Content_Page2 = observer(() => {
 				<TagGroup
 					initial={0}
 					tags={dataProvider.parts[Number.parseInt(id)]}
-					onChanged={(index, name) => console.log(index)}
+					onChanged={(index) => console.log(index)}
 				/>
 			</Row>
 			<Row style={{padding: 5}}>

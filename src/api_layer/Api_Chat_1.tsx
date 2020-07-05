@@ -1,8 +1,4 @@
-import axios, {AxiosRequestConfig} from "axios"
-import {stringify} from "querystring"
-import {message, Row} from "antd"
-import moment from "moment"
-import dotenv from "dotenv"
+import axios from "axios"
 
 export const sendMessage = (payload: any) => {
 	const url = "https://hooks.slack.com/services/T016JB9PBC0/B01646ZGEJH/Tdas2upa3eIUEqFZfZKzQYi" + "V"

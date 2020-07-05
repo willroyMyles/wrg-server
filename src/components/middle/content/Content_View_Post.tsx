@@ -1,15 +1,11 @@
-import React, {useState, Component} from "react"
-import {TextParaGraph, TextHint, TextHeading, TextSubHeading} from "../../helpers/Helpers_Index"
-import {Row, Col, Button, Tooltip, Badge, Affix} from "antd"
-import {BsXCircle} from "react-icons/bs"
+import React, {Component} from "react"
+import {TextParaGraph, TextHint, TextSubHeading} from "../../helpers/Helpers_Index"
+import {Row, Col, Button, Badge, Affix} from "antd"
 import {Avatar} from "evergreen-ui"
-import Paragraph from "antd/lib/typography/Paragraph"
 import moment from "moment"
 import {theme} from "../../../Theme"
 import ReplyBox from "../holders/ReplyBox"
 import CommentBox from "../holders/CommentBox"
-import {blue, green, generate, grey} from "@ant-design/colors"
-import randomColor from "randomcolor"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
 
 interface Props {

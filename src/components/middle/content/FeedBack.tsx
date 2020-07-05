@@ -1,15 +1,14 @@
-import React, {useState, createRef, useRef} from "react"
+import React, {useState} from "react"
 import Motioner from "../../helpers/Motioner"
 import {Input, Row, Button, List, Col} from "antd"
-import {BsMusicNoteBeamed} from "react-icons/bs"
 import {observer} from "mobx-react"
 import chatManager from "../../../data_layer/ChatManager"
 import {TextHeading, TextParaGraph, TextHint} from "../../helpers/Helpers_Index"
 
 const FeedBack = observer(() => {
-	const [data, setData] = useState<any[]>([])
+	const [data] = useState<any[]>([])
 	const [ref, setref] = useState<any>(null)
-	const [value, setvalue] = useState("")
+	const [, setvalue] = useState("")
 
 	const sendData = () => {
 		const msg = ref.state.value
@@ -33,7 +32,7 @@ const FeedBack = observer(() => {
 					<List
 						header="Messages"
 						dataSource={data}
-						renderItem={(item, index) => {
+						renderItem={(item) => {
 							return (
 								<Row justify={item.sender == 1 ? "start" : "end"}>
 									<TextParaGraph>{item.text}</TextParaGraph>

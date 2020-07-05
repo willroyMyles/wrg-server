@@ -1,6 +1,5 @@
-import {blue, green, generate, grey} from "@ant-design/colors"
-import {CSSProp, CSSProperties} from "styled-components"
-import less from "less"
+import {generate, grey} from "@ant-design/colors"
+import {CSSProperties} from "styled-components"
 
 const col = generate("rgba(170,214,189,1)", {
 	theme: "default",
@@ -15,7 +14,7 @@ const faint = D[0] + "66"
 const headingColor = D[9]
 const titleColor = D[9]
 const textColor = grey[7]
-const textWhite = "white"
+const textWhite = "transparent"
 
 export const theme = {
 	primary_color: primary_color,
@@ -28,7 +27,7 @@ export const theme = {
 	text_medium: grey[6],
 	text_heavy: grey[9],
 	text_white: textWhite,
-	color: "rgba(251,251,251,1)",
+	color: "rgba(251,251,251,0)",
 }
 const Theme = theme
 export default Theme

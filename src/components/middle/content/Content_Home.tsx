@@ -1,7 +1,6 @@
 import React from "react"
 import Title from "antd/lib/typography/Title"
 import {localStorageStrings} from "../../helpers/Helpers_Index"
-import {Row, Col} from "antd"
 
 const Content_Home = () => {
 	return (

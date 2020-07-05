@@ -16,6 +16,7 @@ export const sendCreatePost = (data: any) => {
 			.post(url + "post/create", stringify(data))
 			.then((res) => {
 				//display toast
+				//should return a post message
 				if (res) resolve(res)
 			})
 			.catch((err) => {

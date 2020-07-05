@@ -1,11 +1,8 @@
-import React, {useState, useEffect, Component} from "react"
+import React, {Component} from "react"
 import Motioner from "../../helpers/Motioner"
-import {Row, Empty, Spin, message, Col, List} from "antd"
-import {AAvatar, motionValues, TextSubHeading, TextHint, TextParaGraph} from "../../helpers/Helpers_Index"
+import {Row, Empty, message, Col, List} from "antd"
+import {TextSubHeading, TextHint, TextParaGraph} from "../../helpers/Helpers_Index"
 import dataExchanger from "../../../data_layer/DataExchange"
-import Paragraph from "antd/lib/typography/Paragraph"
-import {motion, AnimatePresence} from "framer-motion"
-import Text from "antd/lib/typography/Text"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
 import {Avatar} from "evergreen-ui"
 
@@ -46,7 +43,6 @@ class CommentBox extends Component<{postId: string; replies: any[]}> {
 	}
 
 	render() {
-		console.log("rendering")
 		return (
 			<Motioner style={{width: "100%", marginTop: 20}}>
 				{this.state.data.length == 0 && (
@@ -79,7 +75,10 @@ class CommentBox extends Component<{postId: string; replies: any[]}> {
 												<Row>
 													<Col>
 														<Avatar name={item.username} />
+														<TextHint>{item.name}</TextHint>
 													</Col>
+												</Row>
+												<Row>
 													<Col>
 														<TextParaGraph>{item.body}</TextParaGraph>
 													</Col>

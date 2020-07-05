@@ -1,4 +1,4 @@
-import {action, observable, autorun, computed} from "mobx"
+import {action, observable, autorun} from "mobx"
 import {
 	sendCreatePost,
 	register,
@@ -39,6 +39,36 @@ class Store {
 	@observable currentOtherProfile: any = ""
 	@observable listOfReplies: Map<string, any[]> = new Map()
 
+	format = (element: any) => {
+		if (typeof element.make != typeof "") return
+		if (typeof element.model != typeof "") return
+		if (typeof element.category != typeof "") return
+		if (typeof element.sub_category != typeof "") return
+		element.model = dataProvider.carData[Number.parseInt(element.make)][Number.parseInt(element.model)]
+		element.make = dataProvider.car_make[Number.parseInt(element.make)]
+		element.sub_category = dataProvider.parts[Number.parseInt(element.category)][Number.parseInt(element.sub_category)]
+		element.category = dataProvider.headers[Number.parseInt(element.category)]
+		return element
+	}
+
+	@action getPosts = () => {
+		return new Promise((resolve) => {
+			getPosts(this.postOffset, this.postLimit)
+				.then((res: any) => {
+					if (res.length != 0) this.postOffset += this.postLimit
+					res.forEach((element: any) => {
+						element = this.format(element)
+						this.postData.set(element._id, element)
+					})
+					if (res.length == 0) resolve(100)
+					resolve(true)
+				})
+				.catch((err) => {
+					console.log(err)
+					resolve(false)
+				})
+		})
+	}
 	@action sendCreatePostData = (data: any) => {
 		data.make = data.make_model[0]
 		data.model = data.make_model[1]
@@ -47,10 +77,14 @@ class Store {
 		data.userId = this.userId
 		return new Promise((resolve) => {
 			sendCreatePost(data)
-				.then((res) => {
-					// this.postData.push(this.format(data))
-					this.getPosts()
-					if (res) resolve(true)
+				.then((res: any) => {
+					// this.getPosts()
+					console.log(res.data)
+					this.postData.set(res.data._id, this.format(res.data))
+					if (res) {
+						resolve(true)
+						eventEmitter.emit(eventStrings.postDataAltered)
+					}
 				})
 				.catch((err) => {
 					resolve(false)
@@ -94,44 +128,13 @@ class Store {
 					var d: any[] = []
 					res.forEach((element: {_id: string; body: any}) => {
 						d.push(element)
+						console.log(element.body)
 					})
 					this.listOfReplies.set(postId, d)
 
 					resolve(true)
 				})
 				.catch((err) => {
-					resolve(false)
-				})
-		})
-	}
-
-	format = (element: any) => {
-		if (typeof element.make != typeof "") return
-		if (typeof element.model != typeof "") return
-		if (typeof element.category != typeof "") return
-		if (typeof element.sub_category != typeof "") return
-		element.model = dataProvider.carData[Number.parseInt(element.make)][Number.parseInt(element.model)]
-		element.make = dataProvider.car_make[Number.parseInt(element.make)]
-		element.sub_category = dataProvider.parts[Number.parseInt(element.category)][Number.parseInt(element.sub_category)]
-		element.category = dataProvider.headers[Number.parseInt(element.category)]
-		return element
-	}
-
-	@action getPosts = () => {
-		return new Promise((resolve) => {
-			getPosts(this.postOffset, this.postLimit)
-				.then((res: any) => {
-					if (res.length != 0) this.postOffset += this.postLimit
-					res.forEach((element: any) => {
-						element = this.format(element)
-						this.postData.set(element._id, element)
-					})
-					// this.postData = this.postData.concat(res)
-					if (res.length == 0) resolve(100)
-					resolve(true)
-				})
-				.catch((err) => {
-					console.log(err)
 					resolve(false)
 				})
 		})

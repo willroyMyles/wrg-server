@@ -22,4 +22,5 @@ export const eventStrings = {
 	showFeedback: "feedback",
 	updatingStatistics: "some update",
 	replyCreated: "reply created",
+	postDataAltered: "called for when post data is altered in data layer",
 }

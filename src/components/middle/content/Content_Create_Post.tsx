@@ -1,19 +1,12 @@
-import React, {useEffect, useState} from "react"
-import {Row, Col, Button, message, Select, Tooltip, DatePicker, Cascader, Input} from "antd"
-import BackButton from "../../helpers/BackButton"
-import Title from "antd/lib/typography/Title"
+import React, {useState} from "react"
+import {Row, Col, Button, message, DatePicker, Cascader, Input} from "antd"
 import {useForm, Controller} from "react-hook-form"
-import logger from "../../helpers/Logger"
-import Text from "antd/lib/typography/Text"
-import {Winput} from "../../helpers/Styled"
-import {BsAlarm} from "react-icons/bs"
 import TextArea from "antd/lib/input/TextArea"
 import {ErrorLabel, TextHeading} from "../../helpers/Helpers_Index"
 import dataExchanger from "../../../data_layer/DataExchange"
 import {observer} from "mobx-react"
 import Motioner from "../../helpers/Motioner"
 import dataProvider from "../../../data_layer/DataProvider"
-import {OptionType} from "antd/lib/select"
 import {theme} from "../../../Theme"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
 type FormData = {
@@ -25,7 +18,7 @@ type FormData = {
 }
 
 const Content_Create_Post = observer(() => {
-	const {handleSubmit, errors, clearError, watch, setValue, control, reset, getValues} = useForm<FormData>()
+	const {handleSubmit, errors, setValue, control} = useForm<FormData>()
 	const [loading, setLoading] = useState(false)
 
 	const [make, setMake] = useState("")
@@ -99,7 +92,7 @@ const Content_Create_Post = observer(() => {
 						borderRadius: 7,
 						// backgroundColor: theme.text_white,
 					}}>
-					<Row style={{marginTop: 25}}>
+					<Row style={{marginTop: 25, marginBottom: 20}}>
 						<Col span={24}>
 							<Row className="form-label">Title</Row>
 							<Controller
@@ -111,7 +104,7 @@ const Content_Create_Post = observer(() => {
 							{errors.title && <ErrorLabel text={errors.title.message?.toString()} />}
 						</Col>
 					</Row>
-					<Row justify="center">
+					<Row justify="center" style={{marginBottom: 20}}>
 						<Col span={24}>
 							<Row className="form-label">Content</Row>
 							<Controller
@@ -123,7 +116,7 @@ const Content_Create_Post = observer(() => {
 							{errors.content && <ErrorLabel text={errors.content.message?.toString()} />}
 						</Col>
 					</Row>
-					<Row justify="center" gutter={[10, 0]}>
+					<Row justify="center" gutter={[10, 0]} style={{marginBottom: 20}}>
 						<Col span={24}>
 							<Row className="form-label">Make & Model</Row>
 							<Controller
@@ -145,7 +138,7 @@ const Content_Create_Post = observer(() => {
 							{errors.make_model && <ErrorLabel text={errors.make_model.message?.toString()} />}
 						</Col>
 					</Row>
-					<Row justify="center" gutter={[10, 0]}>
+					<Row justify="center" gutter={[10, 0]} style={{marginBottom: 20}}>
 						<Col span={24}>
 							<Row className="form-label">Category & Sub-Category</Row>
 							<Controller
@@ -167,7 +160,7 @@ const Content_Create_Post = observer(() => {
 							{errors.cat_sub && <ErrorLabel text={errors.cat_sub.message?.toString()} />}
 						</Col>
 					</Row>
-					<Row justify="center">
+					<Row justify="center" style={{marginBottom: 20}}>
 						<Col span={24}>
 							<Row className="form-label">Year (optional)</Row>
 							<Controller
@@ -186,7 +179,7 @@ const Content_Create_Post = observer(() => {
 							{errors.year && <ErrorLabel text={errors.year.message?.toString()} />}
 						</Col>
 					</Row>
-					<Row justify="center" style={{marginTop: 30}}>
+					<Row justify="center" style={{marginTop: 30, marginBottom: 20}}>
 						<Col span={24}>
 							<Button type="primary" loading={loading} htmlType="submit" block>
 								Submit

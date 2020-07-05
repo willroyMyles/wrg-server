@@ -1,6 +1,6 @@
-import React, {SVGProps, useState} from "react"
+import React, {useState} from "react"
 import Text from "antd/lib/typography/Text"
-import {Row, Col} from "antd"
+import {Row} from "antd"
 import Motioner from "./Motioner"
 import {IconType} from "react-icons/lib"
 import {motion} from "framer-motion"
@@ -10,7 +10,7 @@ import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 
 const CustomMenu = ({objects}: {objects: Array<any>}) => {
 	const [index, setIndex] = useState(-1)
-	const [refer, setRefer] = useState<any>()
+	const [, setRefer] = useState<any>()
 	const breakPoint = useBreakpoint()
 
 	return (

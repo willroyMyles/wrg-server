@@ -1,19 +1,15 @@
 import React, {useState, ReactNode, useEffect} from "react"
-import {Layout, Drawer, Modal, Row, Col} from "antd"
+import {Layout, Drawer} from "antd"
 import {Router, Switch, Route} from "react-router-dom"
 import {sideHistory} from "../../helpers/Helpers_Index"
 import Content_Category from "./Content_Category"
 import eventEmitter, {eventStrings} from "../../helpers/EventEmitters"
-import Content_Page from "./Content_Page"
 import Content_Create_Post from "./Content_Create_Post"
 import Content_Home from "./Content_Home"
-import Middle_Header from "../Middle_Header"
 import Signup from "../account/Signup"
-import Motioner from "../../helpers/Motioner"
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint"
 import Settings from "../account/Settings"
 import {theme} from "../../../Theme"
-import Content_View_Post from "./Content_View_Post"
 import Profile_View_Other from "../account/Profile_View_Other"
 import FeedBack from "./FeedBack"
 import Content_Page2 from "./Content_Page2"
@@ -57,7 +53,7 @@ const Content_Holder = () => {
 			sideHistory.push("/settings")
 		})
 
-		eventEmitter.on(eventStrings.PostSelected, (post) => {
+		eventEmitter.on(eventStrings.PostSelected, () => {
 			setVisible(true)
 			// setNode(<Content_View_Post item={post} />)
 		})
